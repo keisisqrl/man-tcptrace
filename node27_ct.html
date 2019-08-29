@@ -1,0 +1,142 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of UDP Analysis </TITLE>
+<META NAME="description" CONTENT="Contents of UDP Analysis ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node28_mn.html">
+<LINK REL="previous" HREF="node26_mn.html">
+<LINK REL="up" HREF="node26_mn.html">
+<LINK REL="next" HREF="node28_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00910000000000000000"></A><A NAME="sec:_UDP_Analysis"></A>
+<BR>
+UDP Analysis 
+</H1>
+
+<A NAME="tex2html69" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+analyzes UDP [<A HREF="node42_ct.html#P80" TARGET="contents">1</A>] 
+traffic minimally with the <SPAN  CLASS="textbf">-u</SPAN> option.
+The following example illustrates the same :
+
+<P>
+<PRE>
+Beluga:/Users/mani/tcptrace-manual&gt; tcptrace -n -u dmpfiles/udp.dmp.gz
+1 arg remaining, starting with 'dmpfiles/udp.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+14 packets seen, 0 TCP packets traced, 14 UDP packets traced
+elapsed wallclock time: 0:00:00.023567, 594 pkts/sec analyzed
+trace file elapsed time: 0:00:00.390867
+no traced TCP packets
+UDP connection info:
+  1: 132.235.3.154:46096 - 132.235.1.1:53 (a2b)    1&gt;    1&lt;
+  2: 132.235.3.154:46097 - 132.235.1.1:53 (c2d)    1&gt;    1&lt;
+  3: 132.235.3.154:46098 - 132.235.1.1:53 (e2f)    1&gt;    1&lt;
+  4: 132.235.3.154:46099 - 132.235.1.1:53 (g2h)    1&gt;    1&lt;
+  5: 132.235.19.80:2649 - 132.235.18.1:53 (i2j)    2&gt;    2&lt;
+  6: 132.235.19.80:2650 - 132.235.64.1:53 (k2l)    1&gt;    1&lt;
+</PRE>
+
+<P>
+Since there is no implicit notion of connections with UDP, 
+<A NAME="tex2html70" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+groups
+connections from the same pair of IP addresses and same pair of UDP ports to
+belong to a ``connection''. 
+
+<P>
+Giving the <SPAN  CLASS="textbf">-l</SPAN> option along with the <SPAN  CLASS="textbf">-u</SPAN> option generates
+more detailed statistics as shown below :
+
+<P>
+<PRE>
+Beluga:/Users/mani/tcptrace-manual&gt; tcptrace -nul dmpfiles/udp.dmp.gz
+1 arg remaining, starting with 'dmpfiles/udp.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+14 packets seen, 0 TCP packets traced, 14 UDP packets traced
+elapsed wallclock time: 0:00:00.026584, 526 pkts/sec analyzed
+trace file elapsed time: 0:00:00.390867
+no traced TCP packets
+UDP connection info:
+6 UDP connections traced:
+UDP connection 1:
+	host a:        132.235.3.154:46096
+	host b:        132.235.1.1:53
+
+	first packet:  Wed Oct 31 14:11:11.046435 2001
+	last packet:   Wed Oct 31 14:11:11.048531 2001
+	elapsed time:  0:00:00.002096
+	total packets: 2
+	filename:      dmpfiles/udp.dmp.gz
+   a-&gt;b:			      b-&gt;a:
+     total packets:             1           total packets:             1      
+     data bytes sent:          46           data bytes sent:         367      
+     throughput:            21947 Bps       throughput:           175095 Bps  
+================================
+UDP connection 2:
+                  . . .
+</PRE>
+
+<P>
+The <SPAN  CLASS="textbf">total packets</SPAN> field lists the total number of packets seen in
+the direction, while 
+the <SPAN  CLASS="textbf">data bytes sent</SPAN> field lists the total number of bytes seen
+in the direction. The <SPAN  CLASS="textbf">throughput</SPAN> field lists
+average throughput calculated as the total bytes seen divided by the
+connection lifetime (the time elapsed between the first and last packets of
+the connection).
+
+<P>
+Analogous to the connection filtering options 
+<SPAN  CLASS="textbf">-o</SPAN> and <SPAN  CLASS="textbf">-i</SPAN> used for selectively processing or ignoring TCP 
+connections (refer Section <A HREF="node20_ct.html#sec:_Basic_Filtering">6.1</A>), options
+<SPAN  CLASS="textbf">--oUDP</SPAN> and <SPAN  CLASS="textbf">--iUDP</SPAN> 
+options selectively process or ignore UDP connections, with the same semantics.
+
+<P>
+The following example illustrates selecting just UDP connections 1,3,5 and
+storing them to file <TT>filt_udp.dmp</TT> :
+
+<P>
+<PRE>
+Beluga:/Users/mani/tcptrace-manual&gt; tcptrace -n -u --oUDP1,3,5 -Ofilt_udp.dmp dmpfiles/udp.dmp.gz
+1 arg remaining, starting with 'dmpfiles/udp.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+14 packets seen, 0 TCP packets traced, 14 UDP packets traced
+elapsed wallclock time: 0:00:00.022974, 609 pkts/sec analyzed
+trace file elapsed time: 0:00:00.390867
+no traced TCP packets
+UDP connection info:
+  1: 132.235.3.154:46096 - 132.235.1.1:53 (a2b)    1&gt;    1&lt;
+  3: 132.235.3.154:46098 - 132.235.1.1:53 (e2f)    1&gt;    1&lt;
+  5: 132.235.19.80:2649 - 132.235.18.1:53 (i2j)    2&gt;    2&lt;
+</PRE>
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

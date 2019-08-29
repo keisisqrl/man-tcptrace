@@ -1,0 +1,107 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Warning Control </TITLE>
+<META NAME="description" CONTENT="Contents of Warning Control ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="previous" HREF="node24_mn.html">
+<LINK REL="up" HREF="node22_mn.html">
+<LINK REL="next" HREF="node26_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00830000000000000000"></A><A NAME="sec:_Warning_Control_Options"></A>
+<BR>
+Warning Control 
+</H1>
+This section describes the options that control the
+printing of warning messages on various events. These options are turned off
+by default and you need to turn them on to be notified.
+You may also use the <TT>-w</TT> option to turn on all of the following
+options.
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">--warn_ooo</SPAN> Warn if packet capture timestamps are found to be
+out of order in the dumpfile. For example, if the dumpfile is of
+<TT>tcpdump</TT> style,
+this option would cause a warning message if the PCAP timestamps of successive
+packets were found decreasing.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">--warn_printtrunc</SPAN> Warn if a packet captured was found too
+short to analyze i.e., if either the basic TCP header(20 bytes) for TCP
+packets or the UDP header (8 bytes) for UDP packets was not fully captured.
+Note that, this warning message typically means that the packet capture was
+not done requesting enough of every packet to be captured. With
+<TT>tcpdump</TT> for example, this can be fixed with a suitable value to 
+the <TT>-s</TT> snaplen option.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">--warn_printbadmbz</SPAN> (Warn Bad Must Be Zero) Prints a warning
+message if any of the 4 least significant bits in the 13th byte of the header 
+(that are reserved and expected to be zeroed) are found to be non zero.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">--warn_printhwdups</SPAN> Warn if hardware duplicates (that commonly
+indicate link-level retransmissions) were found for IPv4 packets.
+Hardware duplicates are defined to be the IPv4 packets
+with the same TCP sequence number and the 16-bit IPv4 identification number 
+of a previously seen packet.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">--warn_printbadcsum</SPAN> This option needs to be given along with
+the <TT>-checksum</TT> option, and prints the packet numbers of the packets
+in the dumpfile that had bad IP and TCP/UDP checksums. The following example
+illustrates this :
+
+<P>
+<PRE>
+alakhian@spider:% tcptrace --warn_printbadcsum --checksum input/bad_tcp_checksum.dmp.gz
+packet 1: bad TCP checksum
+1 arg remaining, starting with 'input/bad_tcp_checksum.dmp.gz'
+Ostermann's tcptrace -- version 6.2.6 -- Thu Nov 14, 2002
+
+10 packets seen, 9 TCP packets traced
+elapsed wallclock time: 0:00:00.057058, 175 pkts/sec analyzed
+trace file elapsed time: 0:00:00.012379
+bad IP checksums:  0
+bad TCP checksums: 1
+TCP connection info:
+  1: analex093.lerc.nasa.gov:2270 - chipper.lerc.nasa.gov:139 (a2b)    3&gt;    6&lt;
+</PRE>
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">--warn_printbad_syn_fin_seq</SPAN> Prints a warning if the SYN or
+FIN segments were retransmitted with a different sequence number from their
+original transmissions.
+</LI>
+</UL>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

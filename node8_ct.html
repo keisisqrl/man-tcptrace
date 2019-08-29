@@ -1,0 +1,386 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Detailed Stats </TITLE>
+<META NAME="description" CONTENT="Contents of Detailed Stats ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node9_mn.html">
+<LINK REL="previous" HREF="node7_mn.html">
+<LINK REL="up" HREF="node7_mn.html">
+<LINK REL="next" HREF="node9_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00510000000000000000"></A><A NAME="sec:_Long_Output"></A>
+<BR>
+Detailed Stats 
+</H1>
+
+<P>
+
+<A NAME="tex2html34" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+can produce detailed statistics of TCP connections from dumpfiles
+when given the <TT>-l</TT> or the long output option. The <TT>-l</TT> option
+produces output similar to the one shown in this example.
+
+<P>
+<PRE>
+Beluga:/Users/mani&gt; tcptrace -l malus.dmp.gz
+
+1 arg remaining, starting with 'malus.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+32 packets seen, 32 TCP packets traced
+elapsed wallclock time: 0:00:00.037948, 843 pkts/sec analyzed
+trace file elapsed time: 0:00:00.404427
+TCP connection info:
+1 TCP connection traced:
+TCP connection 1:
+	host a:        elephus.cs.ohiou.edu:59518
+	host b:        a17-112-152-32.apple.com:http
+	complete conn: yes
+	first packet:  Thu Jul 10 19:12:54.914101 2003
+	last packet:   Thu Jul 10 19:12:55.318528 2003
+	elapsed time:  0:00:00.404427
+	total packets: 32
+	filename:      malus.dmp.gz
+   a-&gt;b:			      b-&gt;a:
+     total packets:            16           total packets:            16      
+     ack pkts sent:            15           ack pkts sent:            16      
+     pure acks sent:           13           pure acks sent:            2      
+     sack pkts sent:            0           sack pkts sent:            0      
+     dsack pkts sent:           0           dsack pkts sent:           0      
+     max sack blks/ack:         0           max sack blks/ack:         0      
+     unique bytes sent:       450           unique bytes sent:     18182      
+     actual data pkts:          1           actual data pkts:         13      
+     actual data bytes:       450           actual data bytes:     18182      
+     rexmt data pkts:           0           rexmt data pkts:           0      
+     rexmt data bytes:          0           rexmt data bytes:          0      
+     zwnd probe pkts:           0           zwnd probe pkts:           0      
+     zwnd probe bytes:          0           zwnd probe bytes:          0      
+     outoforder pkts:           0           outoforder pkts:           0      
+     pushed data pkts:          1           pushed data pkts:          1      
+     SYN/FIN pkts sent:       1/1           SYN/FIN pkts sent:       1/1      
+     req 1323 ws/ts:          Y/Y           req 1323 ws/ts:          Y/Y      
+     adv wind scale:            0           adv wind scale:            0      
+     req sack:                  Y           req sack:                  N      
+     sacks sent:                0           sacks sent:                0      
+     urgent data pkts:          0 pkts      urgent data pkts:          0 pkts 
+     urgent data bytes:         0 bytes     urgent data bytes:         0 bytes
+     mss requested:          1460 bytes     mss requested:          1460 bytes
+     max segm size:           450 bytes     max segm size:          1448 bytes
+     min segm size:           450 bytes     min segm size:           806 bytes
+     avg segm size:           449 bytes     avg segm size:          1398 bytes
+     max win adv:           40544 bytes     max win adv:           33304 bytes
+     min win adv:            5840 bytes     min win adv:           33304 bytes
+     zero win adv:              0 times     zero win adv:              0 times
+     avg win adv:           23174 bytes     avg win adv:           33304 bytes
+     initial window:          450 bytes     initial window:         1448 bytes
+     initial window:            1 pkts      initial window:            1 pkts 
+     ttl stream length:       450 bytes     ttl stream length:     18182 bytes
+     missed data:               0 bytes     missed data:               0 bytes
+     truncated data:          420 bytes     truncated data:        17792 bytes
+     truncated packets:         1 pkts      truncated packets:        13 pkts 
+     data xmit time:        0.000 secs      data xmit time:        0.149 secs 
+     idletime max:          103.7 ms        idletime max:           99.9 ms   
+     throughput:             1113 Bps       throughput:            44957 Bps
+</PRE>
+
+<P>
+The initial lines of output are similar to the brief output explained in
+Chapter <A HREF="node6_ct.html#ch:_basic-usage">3</A>. The following lines indicate that the 
+hosts involved in the connection and their TCP port numbers are:
+<PRE>
+	host a:        elephus.cs.ohiou.edu:59518
+	host b:        a17-112-152-32.apple.com:http
+</PRE>
+The following lines indicate that the connection was seen to be
+<TT>complete</TT> i.e., the connection was traced in its entirety with the
+SYN and FIN segments of the connection observed in the dumpfile. The time at
+which the first and last packets of the connection were captured is reported,
+followed by the lifetime of the connection, and the number of packets seen.
+Then, the filename currently being processed is listed, followed by the 
+multiple TCP statistics for the forward (a2b) and the 
+reverse (b2a) directions.
+
+<P>
+We explain the TCP parameter statistics in the following,
+for the a2b direction. Similar explanation would hold for the b2a direction
+too.
+
+<P>
+
+<UL>
+<LI><TT>total packets</TT> The total number of packets seen.
+
+<P>
+</LI>
+<LI><TT>ack pkts sent</TT> The total number of ack packets seen (TCP
+segments seen with the ACK bit set).
+
+<P>
+</LI>
+<LI><TT>pure acks sent</TT> The total number of ack packets seen that were 
+not piggy-backed with data (just the TCP header and no TCP data payload) 
+and did not have any of the SYN/FIN/RST flags set.
+
+<P>
+</LI>
+<LI><TT>sack pkts sent</TT> The total number of ack packets seen carrying TCP
+SACK [<A HREF="node42_ct.html#MMFR96" TARGET="contents">4</A>] blocks.
+
+<P>
+</LI>
+<LI><TT>dsack pkts sent</TT> The total number of sack packets seen that
+carried duplicate SACK (D-SACK) [<A HREF="node42_ct.html#FMMP00" TARGET="contents">6</A>] blocks.
+
+<P>
+</LI>
+<LI><TT>max sack blks/ack</TT> The maximum number of sack blocks seen in any
+sack packet.
+
+<P>
+</LI>
+<LI><TT>unique bytes sent</TT> The number of unique bytes sent, i.e., the 
+total bytes of data sent excluding retransmitted bytes and any bytes sent doing
+window probing.
+
+<P>
+</LI>
+<LI><TT>actual data pkts</TT> The count of all the packets with
+at least a byte of TCP data payload.
+
+<P>
+</LI>
+<LI><TT>actual data bytes</TT> The total bytes of data seen. Note that
+this <SPAN  CLASS="textit">includes</SPAN> bytes from retransmissions / window probe packets if 
+any.
+
+<P>
+</LI>
+<LI><TT>rexmt data pkts</TT> The count of all the packets found to be
+retransmissions.
+
+<P>
+</LI>
+<LI><TT>rexmt data bytes</TT> The total bytes of data found in the
+retransmitted packets.
+
+<P>
+</LI>
+<LI><TT>zwnd probe pkts</TT> The count of all the window probe packets
+seen. (Window probe packets are typically sent by a sender when the receiver
+last advertised a zero receive window, to see if the window has opened up now).
+
+<P>
+</LI>
+<LI><TT>zwnd probe bytes</TT> The total bytes of data sent in the window 
+probe packets.
+
+<P>
+</LI>
+<LI><TT>outoforder pkts</TT> The count of all the packets that were seen
+to arrive out of order.
+
+<P>
+</LI>
+<LI><TT>pushed data pkts</TT> The count of all the packets seen with the
+PUSH bit set in the TCP header.
+
+<P>
+</LI>
+<LI><TT>SYN/FIN pkts sent</TT> The count of all the packets seen with the
+SYN/FIN bits set in the TCP header respectively.
+
+<P>
+</LI>
+<LI><TT>req 1323 ws/ts</TT> If the endpoint requested Window Scaling/Time
+Stamp options as specified in RFC 1323[<A HREF="node42_ct.html#JBB92" TARGET="contents">9</A>] a `Y' is printed on the
+respective field. If the option was not requested, an `N' is printed. For
+example, an ``N/Y'' in this field means that the window-scaling option was 
+not specified, while the Time-stamp option was specified in the SYN segment.
+
+<P>
+Note that since Window Scaling option is sent only in SYN packets, this field 
+is meaningful only if the connection was captured fully in the dumpfile to
+include the SYN packets.
+
+<P>
+</LI>
+<LI><TT>adv wind scale</TT> The window scaling factor used. Again, this
+field is valid only if the connection was captured fully to include the SYN
+packets. Since the connection would use window scaling if and only if both
+sides requested window scaling [<A HREF="node42_ct.html#JBB92" TARGET="contents">9</A>], 
+this field is reset to 0 (even if a window scale was requested in the SYN 
+packet for this direction), if the SYN packet in the reverse direction did not
+carry the window scale option.
+
+<P>
+</LI>
+<LI><TT>req sack</TT> If the end-point sent a SACK permitted option in the 
+SYN packet opening the connection, a `Y' is printed; otherwise `N' is printed.
+
+<P>
+</LI>
+<LI><TT>sacks sent</TT> The total number of ACK packets seen carrying SACK
+information.
+
+<P>
+</LI>
+<LI><TT>urgent data pkts</TT> The total number of packets with the URG bit
+turned on in the TCP header.
+
+<P>
+</LI>
+<LI><TT>urgent data bytes</TT> The total bytes of urgent data sent. This
+field is calculated by summing the urgent pointer offset values found in
+packets having the URG bit set in the TCP header.
+
+<P>
+</LI>
+<LI><TT>mss requested</TT> The Maximum Segment Size (MSS) requested as a TCP
+option in the SYN packet opening the connection.
+
+<P>
+</LI>
+<LI><TT>max segm size</TT> The maximum segment size observed during the
+lifetime of the connection.
+
+<P>
+</LI>
+<LI><TT>min segm size</TT> The minimum segment size observed during the
+lifetime of the connection.
+
+<P>
+</LI>
+<LI><TT>avg segm size</TT> The average segment size observed during the
+lifetime of the connection calculated as the value reported in the 
+<TT>actual data bytes</TT> field divided by the <TT>actual data pkts</TT>
+reported.
+
+<P>
+</LI>
+<LI><TT>max win adv</TT> The maximum window advertisement seen. If the
+connection is using window scaling (both sides negotiated window scaling
+during the opening of the connection), this is the maximum window-scaled
+advertisement seen in the connection. For a connection using window scaling,
+both the SYN segments opening the connection 
+have to be captured in the dumpfile for this and the following 
+window statistics to be accurate.
+
+<P>
+</LI>
+<LI><TT>min win adv</TT> The minimum window advertisement seen. This is
+the minimum window-scaled advertisement seen if both sides negotiated window
+scaling.
+
+<P>
+</LI>
+<LI><TT>zero win adv</TT> The number of times a zero receive window was
+advertised.
+
+<P>
+</LI>
+<LI><TT>avg win adv</TT> The average window advertisement seen, calculated
+as the sum of all window advertisements divided by the total number of packets
+seen. If the connection endpoints negotiated window scaling, this average is
+calculated as the sum of all window-scaled advertisements divided by the 
+number of window-scaled packets seen. Note that in the window-scaled case,
+the window advertisements in the SYN packets are excluded since the
+SYN packets themselves cannot have their window advertisements scaled, as
+per RFC 1323[<A HREF="node42_ct.html#JBB92" TARGET="contents">9</A>].
+
+<P>
+</LI>
+<LI><TT>initial window</TT> The total number of bytes sent in the initial
+window i.e., the number of bytes seen in the initial flight of data before
+receiving the first ack packet from the other endpoint. Note that the ack
+packet from the other endpoint is the first ack acknowledging <SPAN  CLASS="textit">some</SPAN> 
+data (the ACKs part of the 3-way handshake do not count), and any
+retransmitted packets in this stage are excluded.
+
+<P>
+</LI>
+<LI><TT>initial window</TT> The total number of segments (packets) sent in 
+the initial window as explained above.
+
+<P>
+</LI>
+<LI><TT>ttl stream length</TT> The Theoretical Stream Length. This is
+calculated as the difference between the sequence numbers of the SYN and FIN
+packets, giving the length of the data stream seen.
+Note that this calculation is aware of sequence space wrap-arounds, and is
+printed only if the connection was complete (both the SYN and FIN packets
+were seen).
+
+<P>
+</LI>
+<LI><TT>missed data</TT> The missed data, calculated as the difference
+between the <TT>ttl stream length</TT> and <TT>unique bytes sent</TT>. If
+the connection was not complete, this calculation is invalid and an ``NA'' 
+(Not Available) is printed.
+
+<P>
+</LI>
+<LI><TT>truncated data</TT> The truncated data, calculated as the total
+bytes of data truncated during packet capture. For example, with
+<SPAN  CLASS="textit">tcpdump</SPAN>, the snaplen option can be set to 64 (with -s option) so
+that just the headers of the packet (assuming there are no options) 
+are captured, truncating most of the packet data. 
+In an Ethernet with maximum segment size of 1500 bytes, this
+would amount to truncated data of <!-- MATH
+ $1500 - 64 = 1436 bytes$
+ -->
+<MATH CLASS="INLINE">
+1500 - 64 = 1436 bytes
+</MATH> for a packet.
+
+<P>
+</LI>
+<LI><TT>truncated packets</TT> The total number of packets truncated as
+explained above.
+
+<P>
+</LI>
+<LI><TT>data xmit time</TT> Total data transmit time, calculated as the
+difference between the times of capture of the first and last packets
+carrying non-zero TCP data payload.
+
+<P>
+</LI>
+<LI><TT>idletime max</TT> Maximum idle time, calculated as the maximum
+time between consecutive packets seen in the direction.
+
+<P>
+</LI>
+<LI><TT>throughput</TT> The average throughput calculated as the unique
+bytes sent divided by the elapsed time i.e., the value reported in the
+<TT>unique bytes sent</TT> field divided by the <TT>elapsed time</TT> 
+(the time difference between the capture of the first and last packets in the 
+direction).
+</LI>
+</UL>
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

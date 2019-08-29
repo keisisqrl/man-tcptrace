@@ -1,0 +1,293 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Time Sequence Graph </TITLE>
+<META NAME="description" CONTENT="Contents of Time Sequence Graph ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node13_mn.html">
+<LINK REL="previous" HREF="node11_mn.html">
+<LINK REL="up" HREF="node11_mn.html">
+<LINK REL="next" HREF="node13_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00610000000000000000"></A><A NAME="sec:_Time_Sequence_Graph"></A>
+<BR>
+Time Sequence Graph 
+</H1>
+Time Sequence graphs show the general activity and  events that happen
+during the lifetime of a connection, and can be generated with the <TT>-S</TT> 
+option. These graphs are named as X2Y_tsg.xpl.
+A sample Time Sequence graph is shown in Figure <A HREF="node12_ct.html#tsg1">5.1</A>.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="tsg1"></A><A NAME="586"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5.1:</STRONG>
+Time Sequence Graph #1</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3290" ALIGN="CENTER">
+<IMG
+  WIDTH="675" HEIGHT="396" ALIGN="BOTTOM" BORDER="0"
+ SRC="./tsg1.jpg"
+ ALT="Image tsg1">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+The Y-axis represents sequence number space and the X-axis represents time,
+and the slope of this curve gives the throughput over time.
+A section of this graph (zoomed in with xplot) is shown in Figure <A HREF="node12_ct.html#tsg2">5.2</A>
+illustrating the following features.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="tsg2"></A><A NAME="592"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5.2:</STRONG>
+Time Sequence Graph #2</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3294" ALIGN="CENTER">
+<IMG
+  WIDTH="675" HEIGHT="396" ALIGN="BOTTOM" BORDER="0"
+ SRC="./tsg2.jpg"
+ ALT="Image tsg2">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">Green Line</SPAN> keeps track of the ACK values received from the
+other endpoint.
+</LI>
+<LI><SPAN  CLASS="textbf">Yellow Line</SPAN> tracks the receive window advertised from the
+other endpoint. (It is drawn at the sequence number value corresponding 
+to the sum of the acknowledgment number and the receive window advertised
+from the last ACK packet received.)
+</LI>
+<LI><SPAN  CLASS="textbf">Little Green Ticks</SPAN> track the duplicate ACKs received.
+</LI>
+<LI><SPAN  CLASS="textbf">Little Yellow Ticks</SPAN> track the window advertisements that were
+the same as the last advertisement.
+</LI>
+<LI><SPAN  CLASS="textbf">White Arrows</SPAN> represent segments sent. The up and down arrows
+represent the sequence numbers of the last and first bytes of the segment
+respectively.
+</LI>
+<LI><SPAN  CLASS="textbf">Red Arrows (R)</SPAN> represent retransmitted segments with the 
+up and down arrows similarly representing the sequence numbers of the last
+and first bytes of the segment.
+</LI>
+</UL>
+
+<P>
+Further zooming into the beginning of the connection with xplot we find
+Figure <A HREF="node12_ct.html#tsg3">5.3</A>.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="tsg3"></A><A NAME="606"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5.3:</STRONG>
+Time Sequence Graph #3</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3298" ALIGN="CENTER">
+<IMG
+  WIDTH="675" HEIGHT="396" ALIGN="BOTTOM" BORDER="0"
+ SRC="./tsg3.jpg"
+ ALT="Image tsg3">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+Here, the <SPAN  CLASS="textbf">SYN</SPAN> marks the sequence number and the time when a SYN 
+packet was sent. 
+
+<P>
+The graph shown in Figure <A HREF="node12_ct.html#tsg4">5.4</A> is a section of a TCP connection being
+closed.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="tsg4"></A><A NAME="613"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5.4:</STRONG>
+Time Sequence Graph #4</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3302" ALIGN="CENTER">
+<IMG
+  WIDTH="736" HEIGHT="424" ALIGN="BOTTOM" BORDER="0"
+ SRC="./tsg4.jpg"
+ ALT="Image tsg4">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+Here, 
+
+<UL>
+<LI><SPAN  CLASS="textbf">FIN</SPAN> marks a FIN segment sent in the direction.
+</LI>
+<LI><SPAN  CLASS="textbf">RST_IN, RST_OUT</SPAN>: When a RST segment is sent, a <SPAN  CLASS="textbf">RST_OUT</SPAN>
+is marked in the graph, and a  <SPAN  CLASS="textbf">RST_IN</SPAN> is marked in the Time
+Sequence graph of the opposite direction of the connection.
+</LI>
+<LI><SPAN  CLASS="textbf">Little crosses (x)</SPAN> These are segments sent with zero TCP data 
+payload (the down and up arrows of the segment coincide, giving rise to a
+cross).
+</LI>
+</UL>
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">SACK</SPAN> [<A HREF="node42_ct.html#MMFR96" TARGET="contents">4</A>,<A HREF="node42_ct.html#FMMP00" TARGET="contents">6</A>] blocks found in ACK packets 
+are represented as purple lines with an <SPAN  CLASS="textbf">S</SPAN> on top as shown in 
+Figure <A HREF="node12_ct.html#sack">5.5</A>.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="sack"></A><A NAME="630"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5.5:</STRONG>
+SACK blocks</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3306" ALIGN="CENTER">
+<IMG
+  WIDTH="844" HEIGHT="412" ALIGN="BOTTOM" BORDER="0"
+ SRC="./sack.jpg"
+ ALT="Image sack">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">PUSH</SPAN> segments, i.e., TCP segments sent with the PUSH flag set 
+are represented with a Diamond in place of the up arrow as shown in Figure
+<A HREF="node12_ct.html#push">5.6</A>.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="push"></A><A NAME="637"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5.6:</STRONG>
+PUSH segments</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3310" ALIGN="CENTER">
+<IMG
+  WIDTH="698" HEIGHT="422" ALIGN="BOTTOM" BORDER="0"
+ SRC="./push.jpg"
+ ALT="Image push">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">URGENT</SPAN> segments, i.e., TCP segments carrying URGENT data with
+the URG flag set in the TCP header are represented with a red <SPAN  CLASS="textbf">U</SPAN> on
+top of the segment. This is shown in Figure <A HREF="node12_ct.html#urgent">5.7</A>.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="urgent"></A><A NAME="645"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5.7:</STRONG>
+URGENT segments</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3314" ALIGN="CENTER">
+<IMG
+  WIDTH="761" HEIGHT="444" ALIGN="BOTTOM" BORDER="0"
+ SRC="./urgent.jpg"
+ ALT="Image urgent">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">Window Probing</SPAN> happens when the receiver advertises a window
+of 0 (typically happens when the application goes dormant and TCP holds on
+to the allocated window full of received data, waiting to be picked up). A
+Time-Sequence graph illustrating this is shown in Figure <A HREF="node12_ct.html#zwnd">5.8</A>.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="zwnd"></A><A NAME="652"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5.8:</STRONG>
+Window Probing</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3318" ALIGN="CENTER">
+<IMG
+  WIDTH="747" HEIGHT="437" ALIGN="BOTTOM" BORDER="0"
+ SRC="./zwnd.jpg"
+ ALT="Image zwnd">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+The <SPAN  CLASS="textbf">Z</SPAN> labels in the graph represent a window advertisement of 0
+bytes received from the other endpoint. The subsequent <SPAN  CLASS="textbf">P</SPAN> labels
+indicate the probe packets sent by the sending endpoint to see if the window 
+has opened up yet.
+
+<P>
+</LI>
+</UL>
+The following other symbols also occur in Time Sequence graphs :
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">O</SPAN> represents packets received out of order.
+</LI>
+<LI><SPAN  CLASS="textbf">HD</SPAN> represent Hardware Duplicates. Hardware Duplicates
+correspond to link layer retransmissions found when a duplicate packet with 
+same IPv4 identification number and TCP sequence number as a previously
+observed packet is seen.
+</LI>
+<LI><SPAN  CLASS="textbf">3</SPAN> indicates that the received ack packet was the triple
+duplicate ack, commonly used as the threshold to trigger the TCP
+fast retransmit/recovery algorithm.
+</LI>
+<LI><SPAN  CLASS="textbf">CWR / CE</SPAN> track Explicit Congestion Notification [<A HREF="node42_ct.html#RFB01" TARGET="contents">3</A>]
+messages received. 
+CWR indicates that the Congestion Window Reduced flag was set in
+the TCP header of the packet, 
+while the CE flag indicates that the Congestion Experienced code-point was
+found in the IP header of the packet.
+</LI>
+</UL>
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

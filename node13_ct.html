@@ -1,0 +1,87 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Throughput Graph </TITLE>
+<META NAME="description" CONTENT="Contents of Throughput Graph ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node14_mn.html">
+<LINK REL="previous" HREF="node12_mn.html">
+<LINK REL="up" HREF="node11_mn.html">
+<LINK REL="next" HREF="node14_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00620000000000000000"></A><A NAME="sec:_Throughput_Graph"></A>
+<BR>
+Throughput Graph 
+</H1> 
+Throughput graphs (named X2Y_tput.xpl) are generated with the
+<TT>-T</TT> option. A sample throughput graph is shown in Figure <A HREF="node13_ct.html#tput">5.9</A>.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="tput"></A><A NAME="670"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5.9:</STRONG>
+Throughput Graph</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3323" ALIGN="CENTER">
+<IMG
+  WIDTH="750" HEIGHT="448" ALIGN="BOTTOM" BORDER="0"
+ SRC="./tput.jpg"
+ ALT="Image tput">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+The graph has throughput in bytes/second on the Y-axis and time on the X-axis.
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">Yellow Dots</SPAN> represent instantaneous throughput, defined as the
+size of the segment seen divided by the time since the last segment was seen
+(in this direction).
+</LI>
+<LI><SPAN  CLASS="textbf">Blue Line</SPAN> tracks the average throughput of the connection
+up to that point in the life time of the connection (total bytes seen / total
+seconds so far).
+</LI>
+<LI><SPAN  CLASS="textbf">Red Line</SPAN> tracks the throughput seen from
+the last few samples, calculated as the average of N previous yellow dots.
+By default the line tracks the past 10 samples (N=10). However it can be
+changed with the <TT>-AN</TT> option. For example giving <TT>-A5</TT> along
+with the <TT>-T</TT> option calculates the throughput from the past 5 yellow
+dots to draw the line.
+</LI>
+</UL>
+
+<P>
+Due to clock granularity, there tends to be a lot of
+banding of the dots. If you find the yellow dots annoying, you may turn them 
+off with the <TT>-y</TT> option.
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

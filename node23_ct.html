@@ -1,0 +1,109 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of General </TITLE>
+<META NAME="description" CONTENT="Contents of General ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node24_mn.html">
+<LINK REL="previous" HREF="node22_mn.html">
+<LINK REL="up" HREF="node22_mn.html">
+<LINK REL="next" HREF="node24_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00810000000000000000"></A><A NAME="sec:_General_Options"></A>
+<BR>
+General 
+</H1>
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">--res_addr (DEFAULT)</SPAN>
+Resolve IP addresses to their DNS names.
+You may use the <SPAN  CLASS="textbf">--nores_addr</SPAN> to turn it off 
+i.e., to <SPAN  CLASS="textbf">not</SPAN> resolve IP addresses.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">--res_port (DEFAULT)</SPAN> Resolve port numbers to their service 
+names.
+For example, print <TT>http</TT> for TCP port 80. Note that the <SPAN  CLASS="textbf">-n</SPAN>
+option is equivalent to giving both the <SPAN  CLASS="textbf">--nores_addr</SPAN> and
+<SPAN  CLASS="textbf">--nores_port</SPAN> options.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">--checksum</SPAN> This option turns on checking of
+IP and TCP/UDP checksums. A summary is printed at the end of the analysis,
+indicating the number of packets with bad IP and TCP/UDP checksums.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">--check_hwdups (DEFAULT)</SPAN> Check for hardware duplicates i.e.,
+duplicate IP packets with the same IPv4 identification number and TCP
+sequence number as a previously seen packet. Note that if turned off with
+the <SPAN  CLASS="textbf">--nocheck_hwdups</SPAN> option, such hardware duplicates may be
+counted as retransmissions.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">--ns_hdrs</SPAN> When used while processing
+<A NAME="tex2html62" HREF="http://www.isi.edu/nsnam/ns/" TARGET="_top">ns2</A>
+style dumpfiles, this option
+tells 
+<A NAME="tex2html63" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+that <TT>ns</TT> had the <TT>useHeaders_flag</TT> set to
+TRUE while generating the dumpfile.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">--dupack3_data</SPAN> This option is meaningful only if given along
+with the <SPAN  CLASS="textbf">--turn_off_BSD_dupack</SPAN> option (refer to
+<SPAN  CLASS="textbf">duplicate_acks</SPAN> in Section <A HREF="node9_ct.html#sec:_RTT_Statistics">4.2</A>) to turn on the
+legacy algorithm used by 
+<A NAME="tex2html64" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+to determine triple duplicate acks. 
+This option lets the third duplicate ack contain data with the legacy
+algorithm.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">--endpoint_reuse_interval=S</SPAN> This option can be used
+to change the default idle-time of 4 minutes after which
+activity in the same endpoint tuple (source IP, Port; destination IP, Port)
+is perceived as a new connection, to <SPAN  CLASS="textbf">S</SPAN> seconds.
+
+<P>
+Though it is pretty rare to find two
+hosts reusing their same endpoints for a new connection between them, it has
+been found that dumb devices like certain old printers tend to reuse their
+TCP port numbers pretty often. If you run into such problems, you may use this
+option to change the default idle-time after which activity seen in the same
+endpoints can be perceived as a new connection.
+</LI>
+</UL>
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,225 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Advanced Filtering </TITLE>
+<META NAME="description" CONTENT="Contents of Advanced Filtering ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="previous" HREF="node20_mn.html">
+<LINK REL="up" HREF="node19_mn.html">
+<LINK REL="next" HREF="node22_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00720000000000000000"></A><A NAME="sec:_Advanced_Filtering"></A>
+<BR>
+Advanced Filtering 
+</H1>
+
+<P>
+The <TT>-f</TT> option can be used to perform more sophisticated filtering of
+connections, based on various parameters. 
+The supported filter variables are listed below :
+
+<P>
+<PRE>
+Beluga:/Users/mani/tcptrace-manual&gt; tcptrace -hfilter
+Filter Variables:
+  variable name      type      description
+  -----------------  --------  -----------------------
+  hostname           STRING    FQDN host name (unless -n)
+  portname           STRING    service name of the port (unless -n)
+  port               UNSIGNED  port NUMBER
+  mss                SIGNED    maximum segment size
+  f1323_ws           BOOL      1323 window scaling requested
+  f1323_ts           BOOL      1323 time stampts requested
+  fsack_req          BOOL      SACKs requested
+  window_scale       BOOL      window scale factor
+  bad_behavior       BOOL      bad TCP behavior
+  data_bytes         UNSIGNED  bytes of data
+  data_segs          UNSIGNED  segments of data
+  data_segs_push     UNSIGNED  segments with PUSH set
+  unique_bytes       UNSIGNED  non-retransmitted bytes
+  rexmit_bytes       UNSIGNED  retransmitted bytes
+  rexmit_segs        UNSIGNED  segments w/ retransmitted data
+  ack_segs           UNSIGNED  segments containing ACK
+  pureack_segs       UNSIGNED  segments containing PURE ACK (no data/syn/fin/reset)
+  win_max            UNSIGNED  MAX window advertisement
+  win_min            UNSIGNED  MIN window advertisement
+  win_zero_ct        UNSIGNED  number of ZERO windows advertised
+  min_seq            UNSIGNED  smallest sequence number
+  max_seq            UNSIGNED  largest sequence number
+  num_sacks          UNSIGNED  number of ACKs carrying SACKs
+  max_sacks          UNSIGNED  most SACK blocks in a single ACK
+  segs               UNSIGNED  total segments
+  packets            UNSIGNED  total segments
+  syn_count          UNSIGNED  SYNs sent
+  fin_count          UNSIGNED  FINs sent
+  reset_count        UNSIGNED  RESETs sent
+  min_seg_size       UNSIGNED  smallest amount of data in a segment (not 0)
+  max_seg_size       UNSIGNED  largest amount of data in a segment
+  out_order_segs     UNSIGNED  out of order segments
+  sacks_sent         UNSIGNED  SACKs sent
+  ipv6_segs          UNSIGNED  number of IPv6 segments sent
+  max_idle           UNSIGNED  maximum idle time (usecs)
+  num_hw_dups        UNSIGNED  number of hardware-level duplicates
+  initwin_bytes      UNSIGNED  number of bytes in initial window
+  initwin_segs       UNSIGNED  number of segments in initial window
+  rtt_min            UNSIGNED  MIN round trip time (usecs)
+  rtt_max            UNSIGNED  MAX round trip time (usecs)
+  rtt_count          UNSIGNED  number of RTT samples
+  rtt_min_last       UNSIGNED  MIN round trip time (usecs) (from last rexmit)
+  rtt_max_last       UNSIGNED  MAX round trip time (usecs) (from last rexmit)
+  rtt_count_last     UNSIGNED  number of RTT samples (from last rexmit)
+  rtt_amback         UNSIGNED  number of ambiguous ACKs
+  rtt_cumack         UNSIGNED  number of cumulative ACKs
+  rtt_unkack         UNSIGNED  number of unknown ACKs
+  rtt_dupack         UNSIGNED  number of duplicate ACKs
+  rtt_nosample       UNSIGNED  ACKs that generate no valid RTT sample
+  rtt_triple_dupack  UNSIGNED  number of triple duplicate ACKs (fast rexmit)
+  retr_max           UNSIGNED  MAX rexmits of a single segment
+  retr_min_tm        UNSIGNED  MIN time until rexmit (usecs)
+  retr_max_tm        UNSIGNED  MAX time until rexmit (usecs)
+  trunc_bytes        UNSIGNED  number of bytes not in the file
+  trunc_segs         UNSIGNED  number of segments not in the file
+  num_zwnd_probes    UNSIGNED  number of zero window probes
+  zwnd_probe_bytes   UNSIGNED  number of window probe bytes
+  urg_data_pkts      UNSIGNED  Number of packets with URGENT bit set
+  urg_data_bytes     UNSIGNED  Number of bytes of urgent data
+  hostaddr           IPADDR    IP Address (v4 or v6 in standard textual notation
+  thruput            UNSIGNED  thruput (bytes/sec)
+</PRE>
+
+<P>
+All of the variables listed above can be used for filtering purposes.
+
+<P>
+For example, consider the file <TT>tigris.dmp.gz</TT> having the following two
+connections:
+
+<P>
+<PRE>
+Beluga:/Users/mani&gt; tcptrace tigris.dmp.gz
+. . .
+TCP connection info:
+  1: pride.cs.ohiou.edu:54735 - elephus.cs.ohiou.edu:ssh (a2b)        30&gt;   30&lt;  (complete)
+  2: pride.cs.ohiou.edu:54736 - a17-112-152-32.apple.com:http (c2d)   12&gt;   15&lt;  (complete)
+</PRE>
+
+<P>
+The filter variable <TT>segs</TT> can be used to filter out connections
+having a specified amount of segments in either direction as shown below.
+
+<P>
+<PRE>
+Beluga:/Users/mani&gt; tcptrace -f'segs&gt;=30' tigris.dmp.gz
+Output filter: ((c_segs&gt;=30)OR(s_segs&gt;=30))
+1 arg remaining, starting with 'tigris.dmp.gz'
+. . .
+TCP connection info:
+  1: pride.cs.ohiou.edu:54735 - elephus.cs.ohiou.edu:ssh (a2b)   30&gt;   30&lt;  (complete)
+</PRE>
+
+<P>
+Note the <TT>Output filter</TT> line in the above example. The term 
+c_segs stands for the client segs (client2server direction) and s_segs
+stands for the server segs (server2client direction).
+We filter out only those connections that had at least 30 or more segments seen
+in either direction. You may specify the segments in the server2client
+direction alone as in :
+
+<P>
+<PRE>
+Beluga:/Users/mani&gt; tcptrace -f's_segs==15' tigris.dmp.gz
+Output filter: (s_segs==15)
+. . .
+TCP connection info:
+  2: pride.cs.ohiou.edu:54736 - a17-112-152-32.apple.com:http (c2d)   12&gt;   15&lt;  (complete)
+</PRE>
+
+<P>
+The ``<TT>c_</TT>'' and ``<TT>s_</TT>'' prefixes can be applied analogously
+for all the filter variables cited above. The prefix ``<TT>b_</TT>'' meaning
+``both'' can be applied to the variables if you want the filter to be
+applied to both directions. For the sake of completeness, the prefix
+``<TT>e_</TT>'' meaning ``either'' is also supported, requiring the filter
+variable to be applied to either of the directions (which is of course the
+default case). 
+
+<P>
+Boolean variables listed above can be used as
+flags as in 
+
+<P>
+<PRE>
+tcptrace -f'f1323_ws' file.dmp
+</PRE>
+to filter out only those connections that had window scaling requested in
+their SYN segments.
+
+<P>
+The constant value to which the STRING type variables (hostname/portname)
+are matched need to be enclosed in double quotes. The following example
+illustrates the case when we are filtering out connections for the host
+<TT>elephus.cs.ohiou.edu</TT> and port <TT>ssh</TT>.
+
+<P>
+<PRE>
+Beluga:/Users/mani&gt; tcptrace -f'hostname=="elephus.cs.ohiou.edu" and portname=="ssh"'
+tigris.dmp.gz
+Output filter: (((c_hostname==elephus.cs.ohiou.edu)OR
+(s_hostname==elephus.cs.ohiou.edu))AND((c_portname==ssh)OR(s_portname==ssh)))
+. . .
+TCP connection info:
+  1: pride.cs.ohiou.edu:54735 - elephus.cs.ohiou.edu:ssh (a2b)   30&gt;   30&lt;  (complete)
+</PRE>
+
+<P>
+Note that as in the example above, commonly used boolean operators AND, OR,
+NOT and their common synonyms (-a, -o, &amp;&amp;, ||, !) can be used to combine
+boolean expressions. You may also use parenthesis if you are not sure of the
+precedence of operators. Arithmetic operators (+, -, *, /) with their normal
+precedence and relational operators ( &lt;, &gt;, =, !=, &lt;=, &gt;= ) can be applied
+to SIGNED/UNSIGNED variables. 
+For example, the following are valid :
+
+<P>
+<PRE>
+tcptrace -f`(c_segs+10) &lt; s_segs' file.dmp
+tcptrace -f`b_segs&gt;10 &amp;&amp; thruput&gt;10000' file.dmp
+</PRE>
+
+<P>
+The connection numbers that passed the filtering criteria specified in the
+<TT>-f</TT> option are stored in a file named <TT>PF</TT> in the working
+directory. Note that, if you are graphing along with the <TT>-f</TT> option
+with say the <TT>-G</TT> option, graphs will be generated for all the
+connections and not just the filtered ones. You might want to filter first
+with the <TT>-f</TT> option and graph the filtered connections with the
+<TT>PF</TT> file later, as in :
+
+<P>
+<PRE>
+tcptrace -oPF -G file.dmp
+</PRE>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

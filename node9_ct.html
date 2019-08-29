@@ -1,0 +1,290 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of RTT Stats </TITLE>
+<META NAME="description" CONTENT="Contents of RTT Stats ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node10_mn.html">
+<LINK REL="previous" HREF="node8_mn.html">
+<LINK REL="up" HREF="node7_mn.html">
+<LINK REL="next" HREF="node10_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00520000000000000000"></A><A NAME="sec:_RTT_Statistics"></A>
+<BR>
+RTT Stats 
+</H1>
+RTT (Round-Trip Time) statistics are generated when the <TT>-r</TT> option is
+specified along with the <TT>-l</TT> option (Section <A HREF="node8_ct.html#sec:_Long_Output">4.1</A>).
+The following fields of output are produced along with the output generated
+by the <TT>-l</TT> option.
+
+<P>
+<PRE>
+surya:/home/mani/tcptrace-manual&gt; tcptrace -lr indica.dmp.gz
+
+1 arg remaining, starting with 'indica.dmp.gz'
+Ostermann's tcptrace -- version 6.4.5 -- Fri Jun 13, 2003
+
+153 packets seen, 153 TCP packets traced
+elapsed wallclock time: 0:00:00.128422, 1191 pkts/sec analyzed
+trace file elapsed time: 0:00:19.092645
+TCP connection info:
+1 TCP connection traced:
+TCP connection 1:
+	host a:        192.168.0.70:32791
+	host b:        webco.ent.ohiou.edu:23
+	complete conn: yes
+	first packet:  Thu Aug 29 18:54:54.782937 2002
+	last packet:   Thu Aug 29 18:55:13.875583 2002
+	elapsed time:  0:00:19.092645
+	total packets: 153
+	filename:      indica.dmp.gz
+   a-&gt;b:			      b-&gt;a:
+     total packets:            91           total packets:            62      
+           . . .                                  . . .
+           . . .                                  . . .
+     throughput:               10 Bps       throughput:               94 Bps  
+
+     RTT samples:              48           RTT samples:              47      
+     RTT min:                74.1 ms        RTT min:                 0.1 ms   
+     RTT max:               204.0 ms        RTT max:                38.8 ms   
+     RTT avg:               108.6 ms        RTT avg:                 8.1 ms   
+     RTT stdev:              44.2 ms        RTT stdev:              14.7 ms   
+
+     RTT from 3WHS:          75.0 ms        RTT from 3WHS:           0.1 ms   
+
+     RTT full_sz smpls:         1           RTT full_sz smpls:         1      
+     RTT full_sz min:        79.5 ms        RTT full_sz min:         0.1 ms   
+     RTT full_sz max:        79.5 ms        RTT full_sz max:         0.1 ms   
+     RTT full_sz avg:        79.5 ms        RTT full_sz avg:         0.1 ms   
+     RTT full_sz stdev:       0.0 ms        RTT full_sz stdev:       0.0 ms   
+
+     post-loss acks:            0           post-loss acks:            0
+     
+	  For the following 5 RTT statistics, only ACKs for
+	  multiply-transmitted segments (ambiguous ACKs) were
+	  considered.  Times are taken from the last instance
+	  of a segment.
+     ambiguous acks:            1           ambiguous acks:            0      
+     RTT min (last):         76.3 ms        RTT min (last):          0.0 ms   
+     RTT max (last):         76.3 ms        RTT max (last):          0.0 ms   
+     RTT avg (last):         76.3 ms        RTT avg (last):          0.0 ms   
+     RTT sdv (last):          0.0 ms        RTT sdv (last):          0.0 ms   
+     segs cum acked:            0           segs cum acked:            0      
+     duplicate acks:            0           duplicate acks:            0      
+     triple dupacks:            0           triple dupacks:            0      
+     max # retrans:             1           max # retrans:             0      
+     min retr time:         380.2 ms        min retr time:           0.0 ms   
+     max retr time:         380.2 ms        max retr time:           0.0 ms   
+     avg retr time:         380.2 ms        avg retr time:           0.0 ms   
+     sdv retr time:           0.0 ms        sdv retr time:           0.0 ms
+</PRE>
+
+<P>
+
+<UL>
+<LI><TT>RTT samples</TT> The total number of Round-Trip Time (RTT) samples 
+found. 
+<A NAME="tex2html35" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+is pretty smart about choosing only valid RTT samples. An 
+RTT sample is found only if an ack packet is received from the other endpoint
+for a previously transmitted packet such that the acknowledgment value is 1
+greater than the last sequence number of the packet. Further, it is required
+that the packet being acknowledged was not retransmitted, and that no packets 
+that came before it in the sequence space were retransmitted after the packet 
+was transmitted. Note : The former condition invalidates RTT samples due to
+the retransmission ambiguity problem, and the latter condition invalidates
+RTT samples since it could be the case that the ack packet could be
+cumulatively acknowledging the retransmitted packet, and not necessarily
+ack-ing the packet in question.
+
+<P>
+</LI>
+<LI><TT>RTT min</TT> The minimum RTT sample seen.
+
+<P>
+</LI>
+<LI><TT>RTT max</TT> The maximum RTT sample seen.
+
+<P>
+</LI>
+<LI><TT>RTT avg</TT> The average value of RTT found, calculated
+straightforward-ly as the sum of all the RTT values found divided by the
+total number of RTT samples.
+
+<P>
+</LI>
+<LI><TT>RTT stdev</TT> The standard deviation of the RTT samples.
+
+<P>
+</LI>
+<LI><TT>RTT from 3WHS</TT> The RTT value calculated from the TCP 3-Way
+Hand-Shake (connection opening) [<A HREF="node42_ct.html#ISI81" TARGET="contents">2</A>], assuming that the SYN packets of 
+the connection were captured.
+
+<P>
+</LI>
+<LI><TT>RTT full_sz smpls</TT> The total number of full-size RTT samples, 
+calculated from the RTT samples of full-size segments. Full-size segments
+are defined to be the segments of the largest size seen in the connection.
+
+<P>
+</LI>
+<LI><TT>RTT full_sz min</TT> The minimum full-size RTT sample.
+
+<P>
+</LI>
+<LI><TT>RTT full_sz max</TT> The maximum full-size RTT sample.
+
+<P>
+</LI>
+<LI><TT>RTT full_sz avg</TT> The average full-size RTT sample.
+
+<P>
+</LI>
+<LI><TT>RTT full_sz stdev</TT> The standard deviation of full-size RTT
+samples.
+
+<P>
+</LI>
+<LI><TT>post-loss acks</TT> The total number of ack packets received after
+losses were detected and a retransmission occurred. More precisely, a
+<TT>post-loss ack</TT> is found to occur when an ack packet acknowledges a
+packet sent (acknowledgment value in the ack pkt is 1 greater than the
+packet's last sequence number), and at least one packet occurring before the 
+packet acknowledged, was retransmitted later. In other words, the ack packet
+is received after we observed a (perceived) loss event and are recovering
+from it.
+
+<P>
+</LI>
+<LI><TT>ambiguous acks, RTT min, RTT max, RTT avg, RTT sdv</TT> These
+fields are printed only if there was at least one ack received that was
+ambiguous due to the retransmission ambiguity problem i.e., the segment
+being ack-ed was retransmitted and it is impossible to determine if the ack
+is for the original or the retransmitted packet. Note that these samples are
+not considered in the <TT>RTT samples</TT> explained above. The statistics
+below are calculated from the time of capture of the last transmitted instance
+of the segment.
+
+<P>
+</LI>
+<LI><TT>ambiguous acks</TT> is the total number of such ambiguous acks seen.
+The following <TT>RTT min, RTT max, RTT avg, RTT sdv</TT> fields represent
+the minimum, maximum, average, and standard deviation respectively of the
+RTT samples calculated from ambiguous acks.
+
+<P>
+</LI>
+<LI><TT>segs cum acked</TT> The count of the number of segments that were
+cumulatively acknowledged and not directly acknowledged.
+
+<P>
+</LI>
+<LI><TT>duplicate acks</TT> The total number of duplicate acknowledgments
+received. An ack packet is found to be a duplicate ack based on this
+definition used by 4.4 BSD Lite TCP Stack [<A HREF="node42_ct.html#WS96" TARGET="contents">10</A>] :
+
+<P>
+o The ack packet has the biggest ACK (acknowledgment number) ever seen. 
+<BR>
+o The ack should be pure (carry zero tcp data payload). 
+<BR>
+o The advertised window carried in the ack packet should not change from the
+last window advertisement. 
+<BR>
+o There must be <SPAN  CLASS="textit">some</SPAN> outstanding data.
+<BR>
+<P>
+Note : older versions of 
+<A NAME="tex2html36" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+(until version 6.4.2) used a legacy
+algorithm using just the first condition amongst the four listed above, 
+to treat an ack as duplicate ack.
+This older behavior may be emulated (if necessary at all) with the
+<TT>--turn_off_BSD_dupack</TT> option.
+
+<P>
+</LI>
+<LI><TT>triple dupacks</TT> The total number of triple duplicate
+acknowledgments received (three duplicate acknowledgments acknowledging
+the same segment), 
+a condition commonly used to trigger the fast-retransmit/fast-recovery
+phase of TCP.
+
+<P>
+</LI>
+<LI><TT>max # retrans</TT> The maximum number of retransmissions seen for
+any segment during the lifetime of the connection.
+
+<P>
+</LI>
+<LI><TT>min retr time</TT> The minimum time seen between any two 
+(re)transmissions of a segment amongst all the retransmissions seen.
+
+<P>
+</LI>
+<LI><TT>max retr time</TT> The maximum time seen between any two
+(re)transmissions of a segment.
+
+<P>
+</LI>
+<LI><TT>avg retr time</TT> The average time seen between any two
+(re)transmissions of a segment calculated from all the retransmissions.
+
+<P>
+</LI>
+<LI><TT>sdv retr time</TT> The standard deviation of the
+retransmission-time samples obtained from all the retransmissions.
+
+<P>
+</LI>
+</UL>
+
+<P>
+The raw <TT>RTT samples</TT> found can also be dumped into data files with 
+the <TT>-Z</TT> option as in 
+<PRE>
+tcptrace -Z file.dmp
+</PRE>
+
+<P>
+This generates
+files of the form a2b_rttraw.dat and b2a_rttraw.dat (for both directions of the
+first TCP connection traced), c2d_rttraw.dat and d2c_rttraw.dat (for the
+second TCP connection traced) etc. in the working directory.
+Each of the datafiles contain lines of the form :
+<PRE>
+seq#    rtt
+</PRE>
+where <TT>seq#</TT> is the sequence number of the first byte of the segment
+being acknowledged (by the ack packet that contributed this RTT sample) and
+<TT>rtt</TT> is the RTT value in milli-seconds of the sample. Note that only
+valid RTT samples (as counted in the <TT>RTT Samples</TT> field listed above)
+are dumped.
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

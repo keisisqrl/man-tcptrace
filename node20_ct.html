@@ -1,0 +1,220 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Basic Filtering </TITLE>
+<META NAME="description" CONTENT="Contents of Basic Filtering ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node21_mn.html">
+<LINK REL="previous" HREF="node19_mn.html">
+<LINK REL="up" HREF="node19_mn.html">
+<LINK REL="next" HREF="node21_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00710000000000000000"></A><A NAME="sec:_Basic_Filtering"></A>
+<BR>
+Basic Filtering 
+</H1>
+The <TT>-o</TT> option can be used to <SPAN  CLASS="textbf">only</SPAN> look at certain
+connections. For example 8 TCP connections were traced in the file
+<TT>rexmit.dmp.gz</TT> :
+
+<P>
+<PRE>
+Beluga:/Users/mani/dmpfiles&gt; tcptrace -n rexmit.dmp.gz
+1 arg remaining, starting with 'rexmit.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+6401 packets seen, 6401 TCP packets traced
+elapsed wallclock time: 0:00:00.102161, 62656 pkts/sec analyzed
+trace file elapsed time: 0:20:57.758299
+TCP connection info:
+  1: 132.235.67.82:1321 - 132.235.67.36:9080 (a2b)  178&gt;  113&lt;  (complete)
+  2: 132.235.67.82:3396 - 132.235.67.36:9119 (c2d) 1358&gt; 1311&lt;  (complete)
+  3: 132.235.67.82:2525 - 132.235.67.36:9080 (e2f)   60&gt;   18&lt;
+  4: 132.235.67.82:2666 - 132.235.67.36:9119 (g2h)  910&gt;  872&lt;  (complete)  (reset)
+  5: 132.235.67.82:3299 - 132.235.67.36:9119 (i2j)  722&gt;  676&lt;  (complete)  (reset)
+  6: 132.235.67.82:3584 - 132.235.67.36:9080 (k2l)   56&gt;   16&lt;
+  7: 132.235.67.82:3640 - 132.235.67.36:9080 (m2n)   48&gt;   14&lt;
+  8: 132.235.67.82:4095 - 132.235.67.36:9080 (o2p)   40&gt;    9&lt;
+</PRE>
+
+<P>
+Using the <TT>-o</TT> option with <TT>3,5,7</TT> as shown below, 
+filters out only the 3rd, 5th, and 7th connections out. 
+
+<P>
+<PRE>
+Beluga:/Users/mani/dmpfiles&gt; tcptrace -n -o3,5,7 rexmit.dmp.gz
+1 arg remaining, starting with 'rexmit.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+6401 packets seen, 6401 TCP packets traced
+elapsed wallclock time: 0:00:00.086056, 74381 pkts/sec analyzed
+trace file elapsed time: 0:20:57.758299
+TCP connection info:
+  3: 132.235.67.82:2525 - 132.235.67.36:9080 (e2f)   60&gt;   18&lt;
+  5: 132.235.67.82:3299 - 132.235.67.36:9119 (i2j)  722&gt;  676&lt;  (complete)  (reset)
+  7: 132.235.67.82:3640 - 132.235.67.36:9080 (m2n)   48&gt;   14&lt;
+</PRE>
+
+<P>
+You may use the <TT>-l</TT> option (Section <A HREF="node8_ct.html#sec:_Long_Output">4.1</A>) for
+example, to generate the detailed statistics of only these connections
+as in 
+
+<P>
+<PRE>
+tcptrace -n -o3,5,7 -l rexmit.dmp.gz
+</PRE>
+
+<P>
+Similarly graphs can be generated for the connections you are
+interested in alone for example, by combining both the <TT>-o</TT> and 
+<TT>-G</TT> options. The following example
+illustrates how you could specify a range of connections with the <TT>-o</TT>
+option to get only the connections <TT>1-3, 5, 7-8</TT> from the dumpfile.
+
+<P>
+<PRE>
+Beluga:/Users/mani/dmpfiles&gt; tcptrace -n -o1-3,5,7-8 rexmit.dmp.gz
+1 arg remaining, starting with 'rexmit.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+6401 packets seen, 6401 TCP packets traced
+elapsed wallclock time: 0:00:00.092103, 69498 pkts/sec analyzed
+trace file elapsed time: 0:20:57.758299
+TCP connection info:
+  1: 132.235.67.82:1321 - 132.235.67.36:9080 (a2b)  178&gt;  113&lt;  (complete)
+  2: 132.235.67.82:3396 - 132.235.67.36:9119 (c2d) 1358&gt; 1311&lt;  (complete)
+  3: 132.235.67.82:2525 - 132.235.67.36:9080 (e2f)   60&gt;   18&lt;
+  5: 132.235.67.82:3299 - 132.235.67.36:9119 (i2j)  722&gt;  676&lt;  (complete)  (reset)
+  7: 132.235.67.82:3640 - 132.235.67.36:9080 (m2n)   48&gt;   14&lt;
+  8: 132.235.67.82:4095 - 132.235.67.36:9080 (o2p)   40&gt;    9&lt;
+</PRE>
+
+<P>
+You may also store the connection numbers in a data file <TT>conn.dat</TT>
+for example and pass it to the <TT>-o</TT> option. The <TT>-o</TT> option
+opens and reads from a file if the character following the <TT>-o</TT> is
+not a numeral. For example, when the conn.dat file had just the line
+<PRE>
+1-3, 6-8
+</PRE>
+it causes connections 1-3 and 6-8 alone to be filtered out.
+
+<P>
+<PRE>
+Beluga:/Users/mani/dmpfiles&gt; tcptrace -n -oconn.dat rexmit.dmp.gz
+1 arg remaining, starting with 'rexmit.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+6401 packets seen, 6401 TCP packets traced
+elapsed wallclock time: 0:00:00.091752, 69764 pkts/sec analyzed
+trace file elapsed time: 0:20:57.758299
+TCP connection info:
+  1: 132.235.67.82:1321 - 132.235.67.36:9080 (a2b)  178&gt;  113&lt;  (complete)
+  2: 132.235.67.82:3396 - 132.235.67.36:9119 (c2d) 1358&gt; 1311&lt;  (complete)
+  3: 132.235.67.82:2525 - 132.235.67.36:9080 (e2f)   60&gt;   18&lt;
+  6: 132.235.67.82:3584 - 132.235.67.36:9080 (k2l)   56&gt;   16&lt;
+  7: 132.235.67.82:3640 - 132.235.67.36:9080 (m2n)   48&gt;   14&lt;
+  8: 132.235.67.82:4095 - 132.235.67.36:9080 (o2p)   40&gt;    9&lt;
+</PRE>
+
+<P>
+Sometimes it could be useful to save only the filtered connections into a
+new dumpfile. This can be done with the <TT>-O</TT> option.
+
+<P>
+The following example saves just the connections 4-6 into the file
+<TT>filt_rexmit.dmp</TT>.
+
+<P>
+<PRE>
+Beluga:/Users/mani/dmpfiles&gt; tcptrace -n -o4-6 -Ofilt_rexmit.dmp rexmit.dmp.gz
+1 arg remaining, starting with 'rexmit.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+6401 packets seen, 6401 TCP packets traced
+elapsed wallclock time: 0:00:00.102007, 62750 pkts/sec analyzed
+trace file elapsed time: 0:20:57.758299
+TCP connection info:
+  4: 132.235.67.82:2666 - 132.235.67.36:9119 (g2h)  910&gt;  872&lt;  (complete)  (reset)
+  5: 132.235.67.82:3299 - 132.235.67.36:9119 (i2j)  722&gt;  676&lt;  (complete)  (reset)
+  6: 132.235.67.82:3584 - 132.235.67.36:9080 (k2l)   56&gt;   16&lt;
+</PRE>
+
+<P>
+<SPAN  CLASS="textbf">Ignoring</SPAN> 
+certain connections alone can be done too, with the <TT>-i</TT>
+option. The usage of the <TT>-i</TT> option is very similar to the
+<TT>-o</TT> option.
+
+<P>
+For example, 
+
+<P>
+<PRE>
+tcptrace -n -i1 rexmit.dmp.gz
+</PRE>
+
+<P>
+ignores the first connection alone, and 
+
+<P>
+<PRE>
+tcptrace -n -i1,3-5 rexmit.dmp.gz
+</PRE>
+
+<P>
+ignores connections 1, 3, 4, and 5. A data file containing a list of
+connection numbers to ignore can also be given in the <TT>-i</TT> option 
+(as shown above for the <TT>-o</TT> option).
+
+<P>
+The <TT>-c</TT> option is useful if you are interested in looking at only
+<SPAN  CLASS="textbf">complete</SPAN> connections i.e., the connections for which both the SYN
+and FIN segments opening and closing the connection were seen.
+
+<P>
+Finally, 
+for some reason if you are interested in looking only at the first 200 
+packets found in the file for example, 
+you may use the <TT>-E</TT> option as in 
+<PRE>
+tcptrace -n -E200 rexmit.dmp.gz
+</PRE>
+You may also begin at the 300th packet in the file for example, with the
+<TT>-B</TT> option as in 
+<PRE>
+tcptrace -n -B300 rexmit.dmp.gz
+</PRE>
+Using both the options, lets you look at a range of packets as they occurred
+in the dumpfile, as in
+<PRE>
+tcptrace -n -B100 -E200 rexmit.dmp.gz
+</PRE>
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

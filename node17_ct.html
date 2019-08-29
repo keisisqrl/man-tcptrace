@@ -1,0 +1,144 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Time-Line Graph </TITLE>
+<META NAME="description" CONTENT="Contents of Time-Line Graph ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node18_mn.html">
+<LINK REL="previous" HREF="node16_mn.html">
+<LINK REL="up" HREF="node11_mn.html">
+<LINK REL="next" HREF="node18_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00660000000000000000"></A><A NAME="Time-Line_Graph"></A>
+<BR>
+Time-Line Graph 
+</H1>
+The goal of the Time-Line graphs is to generate graphs similar to the pretty 
+graphs found in the book ``TCP/IP Illustrated Volume I'' by W. Richard Stevens
+[<A HREF="node42_ct.html#Stevens94" TARGET="contents">7</A>], illustrating the activities of connections.
+The graphs can be generated with the <TT>-L</TT> option and generates graphs
+named as X_Y_tline.xpl
+
+<P>
+The Time-Line graphs are still EXPERIMENTAL and are under development.
+The fundamental problem with generating these graphs is that
+the time values for the segments arriving/leaving are available only from
+the end where the traffic was captured, while the time values of when the 
+packets arrived or left at the other end have to be estimated with some
+heuristic. Doing this <SPAN  CLASS="textit">right</SPAN> tends to be a hard problem taking care
+of conditions like retransmits, timeouts etc. 
+The current heuristic is a simple one of adding/subtracting 1/3rd of the rtt. 
+
+<P>
+This graph provides a pictorial view of the segments
+being transmitted in either direction, over the duration of the connection.
+The Y-axis shows increasing time going from the top to bottom of the graph.
+The X-axis shows the segments being transmitted between the 2 hosts
+communicating. As you zoom in with xplot, more and more details will become
+visible. Here is an example of a time line graph:
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="tline1"></A><A NAME="723"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5.13:</STRONG>
+Time-Line Graph #1</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3343" ALIGN="CENTER">
+<IMG
+  WIDTH="822" HEIGHT="516" ALIGN="BOTTOM" BORDER="0"
+ SRC="./tline1.png"
+ ALT="Image tline1">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+Following is a closeup (zoomed in with xplot):
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="tline2"></A><A NAME="728"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 5.14:</STRONG>
+Time-Line Graph #2</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3347" ALIGN="CENTER">
+<IMG
+  WIDTH="822" HEIGHT="516" ALIGN="BOTTOM" BORDER="0"
+ SRC="./tline2.png"
+ ALT="Image tline2">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+The following features can be seen in the graph
+<DL>
+<DT><STRONG>Axis</STRONG></DT>
+<DD>X-axis : segments being transmitted in either direction (zoom in to see the
+ arrow heads for the correct direction) 
+
+<P>
+Y-axis : running time of the connection (TOP to BOTTOM, ignoring the
+ negative sign)
+
+<P>
+</DD>
+<DT><STRONG>Graph Features</STRONG></DT>
+<DD><DL>
+<DT><STRONG>Green Lines</STRONG></DT>
+<DD>The green lines show the segments traveling in the direction a-&gt;b
+
+<P>
+</DD>
+<DT><STRONG>Yellow Lines</STRONG></DT>
+<DD>The yellow lines show the segments traveling in the direction b-&gt;a
+
+<P>
+</DD>
+<DT><STRONG>Labels</STRONG></DT>
+<DD>The labels alongside the segments have the following format:
+
+<P>
+TCP Flags (only if set), 
+   sequence_number_from:sequence_number_to(difference, bytes transmitted), 
+   acknowledgment_sequence_number, 
+   advertised window, 
+   retransmit indicator (``R''), 
+   hardware duplicate indicator (``HD'') 
+
+<P>
+The sequence number for the first segment in either direction is
+   absolute, while the rest are relative to the first segment.
+ 
+</DD>
+</DL>
+</DD>
+</DL>
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

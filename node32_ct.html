@@ -1,0 +1,422 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of TRAFFIC Module </TITLE>
+<META NAME="description" CONTENT="Contents of TRAFFIC Module ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node33_mn.html">
+<LINK REL="previous" HREF="node31_mn.html">
+<LINK REL="up" HREF="node31_mn.html">
+<LINK REL="next" HREF="node33_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION001010000000000000000"></A><A NAME="sec:_TRAFFIC_Module"></A>
+<BR>
+TRAFFIC Module 
+</H1>
+We have seen in the earlier chapters that 
+<A NAME="tex2html88" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+can generate
+detailed statistics and graphs from a dumpfile on a per connection basis. The
+goal of the <TT>traffic</TT> module is to raise the level of abstraction
+and present statistics on a per port basis, and for the entire traffic found in
+the dumpfile. 
+
+<P>
+The <TT>traffic</TT> module can be invoked as follows :
+<PRE>
+tcptrace -xtraffic``[ARGS]'' &lt;dumpfile&gt;
+</PRE>
+where the field <TT>ARGS</TT> represents any arguments to be sent to the 
+<TT>traffic</TT> module, and are explained in the following.
+
+<P>
+When the <TT>traffic</TT> module is invoked without any arguments as in :
+<PRE>
+surya:/home/mani&gt; tcptrace -xtraffic sack_city.dmp.gz
+mod_traffic: characterizing traffic
+1 arg remaining, starting with 'sack_city.dmp.gz'
+Ostermann's tcptrace -- version 6.4.7 -- Fri Aug 1, 2003
+
+28427 packets seen, 28427 TCP packets traced
+elapsed wallclock time: 0:00:00.649954, 43736 pkts/sec analyzed
+trace file elapsed time: 1:22:34.149090
+Dumping port statistics into file traffic_byport.dat
+Dumping overall statistics into file traffic_stats.dat
+Plotting performed at 15.000 second intervals
+</PRE>
+
+<P>
+it generates two data files <TT>traffic_stats.dat</TT> and 
+<TT>traffic_byport.dat</TT>. 
+
+<P>
+The <TT>traffic_stats.dat</TT> file has statistics on the entire traffic found
+from the dumpfile and looks as in :
+<PRE>
+Overall Statistics over 4954 seconds (1:22:34.149090):
+12531375 ttl bytes sent, 2529.547 bytes/second
+8590918 ttl non-rexmit bytes sent, 1734.138 bytes/second
+3940457 ttl rexmit bytes sent, 795.409 bytes/second
+28427 packets sent, 5.738 packets/second
+19 connections opened, 0.004 conns/second
+59 dupacks sent, 0.012 dupacks/second
+3015 rexmits sent, 0.609 rexmits/second
+average RTT: 78.268 msecs
+</PRE>
+
+<P>
+From the above, we can notice that the <TT>traffic</TT> module prints
+the total time the dumpfile lasted; the total (ttl) number of bytes sent, 
+average bytes sent per second; the total number of retransmitted and
+non-retransmitted bytes and the average bytes (retransmitted and
+non-retransmitted) per second; the total number of packets, connections,
+duplicate acks (dupacks) and retransmits (rexmits) seen (along with their
+respective averages seen per second) and finally the average RTT found from
+all the RTT samples. Note that the average RTT includes RTT samples found 
+that were ambiguous too (Total samples = RTT samples + ambiguous acks as
+explained in Section <A HREF="node9_ct.html#sec:_RTT_Statistics">4.2</A>.
+
+<P>
+The <TT>traffic_byport.dat</TT> file looks as in :
+
+<P>
+<PRE>
+Overall totals by port
+TOTAL        bytes:     12531375  pkts:      28427  conns:       19  tput:     2529 B/s
+Port    22   bytes:       892552  pkts:      10324  conns:        1  tput:      180 B/s
+Port  5002   bytes:     11638823  pkts:      18103  conns:       18  tput:     2349 B/s
+. . .
+</PRE>
+listing per-port statistics on the bytes, packets, connections, and the
+observed throughput.
+
+<P>
+The <SPAN  CLASS="textbf">-p</SPAN> option to the <TT>traffic</TT> module lets it gather
+statistics only on certain ports of interest.
+
+<P>
+For example :
+<PRE>
+tcptrace -xtraffic''-p80'' rubeus.dmp
+</PRE>
+prints statistics for just web connections (TCP port 80), while 
+
+<P>
+<PRE>
+tcptrace -xtraffic''-p1-1024'' rubeus.dmp
+</PRE>
+
+<P>
+prints statistics only for TCP connections with either of the ports in the
+range of 1 to 1024 (inclusive).
+
+<P>
+You may also selectively ignore web traffic (port 80) but have the rest of
+the low port traffic as analyzed above with :
+<PRE>
+tcptrace -xtraffic''-p1-1024,-80'' rubeus.dmp
+</PRE>
+
+<P>
+The following 
+
+<P>
+<PRE>
+tcptrace -xtraffic''-p1-1024,-80-89'' rubeus.dmp
+</PRE>
+
+<P>
+ignores traffic destined to ports 80-89 while choosing the connections
+destined to the rest of the ports in the range 1-1024.
+
+<P>
+The <TT>traffic</TT> module can also generate graphs that can be read with the 
+xplot program as explained below.
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">-B</SPAN> option generates the bytes-per-second per port# graph
+(<TT>traffic_bytes.xpl</TT>) for the connections analyzed by the 
+<TT>traffic module</TT>. For example the following 
+<PRE>
+surya:/home/mani&gt; tcptrace -xtraffic''-p22,80 -B'' minerva.dmp
+</PRE>
+generated the graph shown in Figure <A HREF="node32_ct.html#Traffic_Module__-B_">9.1</A> and 
+illustrates the bytes-per-second seen on
+ports 22 and 80 respectively.
+The <TT>traffic</TT> module plots the graphs at
+discrete intervals of 15 seconds on the x-axis by default. This interval at
+which the graph is plotted can be altered if necessary with the <TT>-iS</TT>
+option, where S represents the interval S in seconds.
+Note that if there a lot of ports being
+analyzed, your graph may have as many colors. Please zoom into the beginning
+of the graphs to find out which colored line in the graph represents the
+port number you are interested in. 
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="Traffic_Module__-B_"></A><A NAME="1618"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9.1:</STRONG>
+Traffic Module (-B)</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3382" ALIGN="CENTER">
+<IMG
+  WIDTH="704" HEIGHT="404" ALIGN="BOTTOM" BORDER="0"
+ SRC="./traffic-B.jpg"
+ ALT="Image traffic-B">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-P</SPAN> option generates similarly, the packets-per-second per
+port# graph (<TT>traffic_packets.xpl</TT>). 
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-T</SPAN> option generates the graph (<TT>traffic_data.xpl</TT>) 
+representing the total data seen across all the
+connections analyzed and is illustrated in Figure <A HREF="node32_ct.html#Traffic_Module__-T_">9.2</A>.
+The red-line tracks the non-retransmitted data while the blue line tracks
+the total data sent.
+
+<DIV ALIGN="CENTER"><A NAME="Traffic_Module__-T_"></A><A NAME="1628"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9.2:</STRONG>
+Traffic Module (-T)</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3386" ALIGN="CENTER">
+<IMG
+  WIDTH="706" HEIGHT="410" ALIGN="BOTTOM" BORDER="0"
+ SRC="./traffic-T.jpg"
+ ALT="Image traffic-T">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-A</SPAN> option generates a graph (<TT>traffic_active.xpl</TT>)
+of the active connections over
+time per port. A connection is deemed active if a packet belonging to the
+connection was noticed in the last interval.
+A sample graph is illustrated in Figure <A HREF="node32_ct.html#Traffic_Module__-A_">9.3</A>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="Traffic_Module__-A_"></A><A NAME="1636"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9.3:</STRONG>
+Traffic Module (-A)</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3390" ALIGN="CENTER">
+<IMG
+  WIDTH="700" HEIGHT="408" ALIGN="BOTTOM" BORDER="0"
+ SRC="./traffic-A.jpg"
+ ALT="Image traffic-A">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-O</SPAN> option generates the graph (<TT>traffic_open.xpl</TT>)
+of the number of open connections over time by port. A connection is deemed
+open after a packet is seen in either direction and is considered open until
+either a RST segment or FIN segments (in both directions) are seen.
+A sample graph shown in Figure <A HREF="node32_ct.html#Traffic_Module__-O_">9.4</A> illustrates the
+number of open connections for one port (5002 in this case) over time.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="Traffic_Module__-O_"></A><A NAME="1644"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9.4:</STRONG>
+Traffic Module (-O)</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3394" ALIGN="CENTER">
+<IMG
+  WIDTH="672" HEIGHT="406" ALIGN="BOTTOM" BORDER="0"
+ SRC="./traffic-O.jpg"
+ ALT="Image traffic-O">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-I</SPAN> option generates the ``instantaneous-open'' graph
+(<TT>traffic_i_open.xpl</TT>) so that connections opening or closing are
+plotted when they are found to do so (as opposed to graphing them
+only at the end of the sampling interval as done by the <SPAN  CLASS="textbf">-O</SPAN> option).
+The instantaneous version of the graph in Figure <A HREF="node32_ct.html#Traffic_Module__-O_">9.4</A>
+is shown in Figure <A HREF="node32_ct.html#Traffic_Module__-I_">9.5</A>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="Traffic_Module__-I_"></A><A NAME="1654"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9.5:</STRONG>
+Traffic Module (-I)</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3398" ALIGN="CENTER">
+<IMG
+  WIDTH="674" HEIGHT="416" ALIGN="BOTTOM" BORDER="0"
+ SRC="./traffic-I.jpg"
+ ALT="Image traffic-I">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-H</SPAN> option generates the half-open graph
+(<TT>traffic_halfopen.xpl</TT>) representing the number of half-open
+connections over time per port, where a connection is deemed half-open from
+the time a FIN segment is seen in one direction until the FIN segment is
+received from the opposite direction.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-C</SPAN> option generates the open-close graph
+(<TT>traffic_openclose.xpl</TT>). A sample graph shown in Figure
+<A HREF="node32_ct.html#Traffic_Module__-C_">9.6</A> illustrates the following. The green-line tracks
+the number of connections open in the past interval; the red-line tracks the
+number of connections closed in the past interval 
+(either a RST segment or FIN segments in both directions, are seen)
+; the blue line tracks the total number of open connections (same as the
+line plotted with the <SPAN  CLASS="textbf">-O</SPAN> option).
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="Traffic_Module__-C_"></A><A NAME="1665"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9.6:</STRONG>
+Traffic Module (-C)</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3402" ALIGN="CENTER">
+<IMG
+  WIDTH="734" HEIGHT="424" ALIGN="BOTTOM" BORDER="0"
+ SRC="./traffic-C.jpg"
+ ALT="Image traffic-C">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-Q</SPAN> option generates the idle (Quiet) connections over time
+graph (<TT>traffic_idle.xpl</TT>), 
+plotting the total number of idle connections over time per port. A
+connection is deemed idle for an interval if no packets belonging to it were
+seen in the interval.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-D</SPAN> option generates the long-duration graph
+(<TT>traffic_long.xpl</TT>) representing the number of connections open for
+a long duration of time over time per port. The default definition of long
+duration is 60 seconds, which can be changed to a user-defined S seconds by
+giving the option as in <TT>-DS</TT>.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-K</SPAN> option generates the pureacks graph
+(<TT>traffic_pureacks.xpl</TT>) representing the number of pureacks seen
+per second over time on a per port basis.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-L</SPAN> option generates the loss graph
+(<TT>traffic_loss.xpl</TT>) representing the loss events per second seen in
+the dumpfile. A sample graph is shown in Figure <A HREF="node32_ct.html#Traffic_Module__-L_">9.7</A>.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="Traffic_Module__-L_"></A><A NAME="1680"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9.7:</STRONG>
+Traffic Module (-L)</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3406" ALIGN="CENTER">
+<IMG
+  WIDTH="618" HEIGHT="386" ALIGN="BOTTOM" BORDER="0"
+ SRC="./traffic-L.jpg"
+ ALT="Image traffic-L">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+The blue-line tracks actual retransmit events per second observed in the
+past interval while the yellow-line tracks the number of triple duplicate acks
+observed per second in the past interval.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-R</SPAN> option generates the RTT graph from the RTT samples
+(including RTT from ambiguous acks) representing the minimum, average, and 
+maximum RTT values observed in the dumpfile in the past interval. A sample
+graph is shown in Figure <A HREF="node32_ct.html#Traffic_Module__-R_">9.8</A>.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="Traffic_Module__-R_"></A><A NAME="1687"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9.8:</STRONG>
+Traffic Module (-R)</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3410" ALIGN="CENTER">
+<IMG
+  WIDTH="624" HEIGHT="380" ALIGN="BOTTOM" BORDER="0"
+ SRC="./traffic-R.jpg"
+ ALT="Image traffic-R">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+The green-line tracks the minimum RTT observed, the blue-line the average
+RTT observed, and the red-line tracks the maximum observed RTT. Note that,
+you may choose to generate the graph of RTT values in the range of interest,
+between 100 milli-sec and 200 milli-sec for example giving
+<SPAN  CLASS="textbf">-R100-200</SPAN>. This would consider only the RTT samples in the range
+100-200 msecs observed in the past interval for plotting.
+
+<P>
+Note that, the <SPAN  CLASS="textbf">-G</SPAN> option can be used to generate all the graphs.
+Further, in all the graphs that carry information on a per port basis, a
+green line always tracks the total value of the statistic represented 
+on the y-axis, summing up the statistic of all the individual ports 
+drawn in the graph.
+</LI>
+</UL>
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,103 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Real-Time Module </TITLE>
+<META NAME="description" CONTENT="Contents of Real-Time Module ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node37_mn.html">
+<LINK REL="previous" HREF="node35_mn.html">
+<LINK REL="up" HREF="node31_mn.html">
+<LINK REL="next" HREF="node37_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION001050000000000000000"></A><A NAME="sec:_Real-Time_Module"></A>
+<BR>
+Real-Time Module 
+</H1>
+The Real-Time module is a sample module that can be used to 
+run 
+<A NAME="tex2html95" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+continuously, as described in Section 
+<A HREF="node28_ct.html#sec:_Real-Time_Analysis">8.2</A>. This module has the side effect of turning
+off name lookups, and turning on the <SPAN  CLASS="textbf">--continuous</SPAN> option and 
+UDP processing internally.
+
+<P>
+A sample run of 
+<A NAME="tex2html96" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+with the module is shown below.
+
+<P>
+<PRE>
+elephus:/home/mramadas&gt; tcpdump -n -w - | tcptrace -xrealtime stdin
+mod_realtime: Capturing traffic
+1 arg remaining, starting with 'stdin'
+Ostermann's tcptrace -- version 6.4.3 -- Sat May 17, 2003
+
+tcpdump: listening on eth0
+1060719445.161771  132.235.3.153:47240  132.235.3.154:22 new connection
+1060719445.161771  132.235.3.153:47240  132.235.3.154:22 connection closes (had 1 packets)
+1060719449.962521  128.156.10.12:54238  132.235.3.153:22 new connection
+1060719449.962796  132.235.3.153:44883  205.188.12.92:23 new connection
+1060719453.001292  132.235.3.153:47463  132.235.3.154:22 new connection
+1060719475.647109  24.93.103.242:706    132.235.3.153:44860 new connection
+1060719485.475633  2001:0468:0b02:0820:0208:74ff:fe40:0b81:51846        2001:1418:0013:0001::0025:6667 new connection
+1060719509.995893  number of open connections is 5
+1060719535.015844  132.235.194.68:80    132.235.3.153:47217 new connection
+1060719535.055810  132.235.194.68:80    132.235.3.153:47218 new connection
+1060719569.995794  number of open connections is 7
+1060719573.996664  132.235.3.153:47500  63.111.9.162:80 new connection
+1060719574.096991  132.235.3.153:47501  63.111.9.162:80 new connection
+1060719574.497344  132.235.3.153:47510  202.87.41.115:80 new connection
+1060719574.497398  132.235.3.153:47511  202.87.41.115:80 new connection
+1060719575.240305  132.235.3.153:47510  202.87.41.115:80 connection closes (had 6 packets)
+1060719575.276251  132.235.3.153:47511  202.87.41.115:80 connection closes (had 6 packets)
+1060719575.883715  132.235.3.153:47520  202.87.41.119:80 new connection
+1060719577.412365  132.235.3.153:47521  202.87.41.119:80 new connection
+
+2251 packets received by filter
+0 packets dropped by kernel
+
+
+Terminating processing early on signal 2
+Partial result after processing 2109 packets:
+
+
+
+realtime: TCP packets - 531
+realtime: UDP packets - 1431
+realtime: other packets - 4
+        protocol:   1, number: 4
+</PRE>
+
+<P>
+As shown above the module prints a message everytime a new connection is
+found opening or closing in the network. Periodically (every minute), 
+the module also prints out the number of connections open.
+Finally, at the end of processing, the module prints the total number of 
+TCP, UDP, and other packets found in the network as shown above.
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

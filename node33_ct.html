@@ -1,0 +1,348 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of HTTP Module </TITLE>
+<META NAME="description" CONTENT="Contents of HTTP Module ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node34_mn.html">
+<LINK REL="previous" HREF="node32_mn.html">
+<LINK REL="up" HREF="node31_mn.html">
+<LINK REL="next" HREF="node34_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION001020000000000000000"></A><A NAME="sec:_HTTP_Module"></A>
+<BR>
+HTTP Module 
+</H1>
+
+<P>
+The HTTP module can be used to analyze web (HTTP 1.0 [<A HREF="node42_ct.html#HTTP1-0" TARGET="contents">8</A>] and
+HTTP 1.1 [<A HREF="node42_ct.html#HTTP1-1" TARGET="contents">5</A>]) traffic from dumpfiles. 
+The module can be run by passing in
+the <SPAN  CLASS="textbf">-xhttp[P]</SPAN> option to 
+<A NAME="tex2html92" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+, where <SPAN  CLASS="textbf">P</SPAN> represents the 
+HTTP port number. By default, the module looks for web traffic in
+the TCP well known port 80. 
+If your dumpfile has web traffic in port number P (not 80), 
+you may pass it in as P in the command line as shown above.
+
+<P>
+The <TT>http</TT> module implicitly has the effect of the <SPAN  CLASS="textbf">-e</SPAN> option
+(refer Section <A HREF="node29_ct.html#sec:_Packet_Details">8.3</A>), and extracts data found from
+individual connections to data files of the form <TT>X2Y_contents.dat</TT>.
+Note that since the HTTP module needs the data from HTTP connections, 
+it is important that the packet contents are fully captured in
+dumpfiles. With <TT>tcpdump</TT> for example, you need to ensure that an
+appropriate <TT>snaplen</TT> (with the <TT>-s</TT> option) value is chosen.
+
+<P>
+When the HTTP module is invoked as in
+
+<P>
+<PRE>
+Beluga:/Users/mani&gt; tcptrace -n -xhttp severus.dmp.gz
+</PRE>
+
+<P>
+we get the following output.
+
+<P>
+<PRE>
+mod_http: Capturing HTTP traffic (port 80)
+1 arg remaining, starting with '/Users/mani/dmpfiles/standard/severus.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+4810 packets seen, 4810 TCP packets traced
+elapsed wallclock time: 0:00:00.840086, 5725 pkts/sec analyzed
+trace file elapsed time: 0:04:06.838094
+TCP connection info:
+  1: 103.196.209.147:15414 - 151.12.146.176:80 (a2b)   1601&gt; 2671&lt;
+  2: 88.56.8.130:35457 - 199.19.215.115:80 (c2d)          1&gt;    1&lt;
+  3: . . .
+  . . .
+ 19: 247.139.32.218:2349 - 80.169.50.43:80 (ak2al)       10&gt;   11&lt;  (complete)
+ 20: 181.246.188.179:4482 - 133.114.250.132:80 (am2an)   26&gt;   34&lt;  (reset)  
+Http module output:
+103.196.209.147:15414 ==&gt; 151.12.146.176:80 (a2b)
+  Server Syn Time:              &lt;the epoch&gt;        (0.000)
+  Client Syn Time:              &lt;the epoch&gt;        (0.000)
+  Server Fin Time:      Thu May  1 14:33:34.998156 2003 (1051814014.998)
+  Client Fin Time:      Thu May  1 14:33:35.734937 2003 (1051814015.735)
+No additional information available, beginning of connection (SYNs) were not found in trace file.
+88.56.8.130:35457 ==&gt; 199.19.215.115:80 (c2d)
+. . .
+. . .
+88.56.8.130:35458 ==&gt; 21.28.79.90:80 (i2j)
+  Server Syn Time:      Thu May  1 14:29:41.695579 2003 (1051813781.696)
+  Client Syn Time:      Thu May  1 14:29:41.657188 2003 (1051813781.657)
+  Server Fin Time:      Thu May  1 14:30:47.963562 2003 (1051813847.964)
+  Client Fin Time:      Thu May  1 14:30:47.924972 2003 (1051813847.925)
+    GET /main.asp HTTP/1.0
+	Response Code:       200 (OK)
+	Request Length:      438
+	Reply Length:        30730
+	Content Length:      30447
+	Content Type  :      text/html
+	Time request sent:   Thu May  1 14:29:41.700691 2003 (1051813781.701)
+	Time reply started:  Thu May  1 14:29:45.189720 2003 (1051813785.190)
+	Time reply ACKed:    Thu May  1 14:29:46.394593 2003 (1051813786.395)
+	Elapsed time:  3489 ms (request to first byte sent)
+	Elapsed time:  4694 ms (request to content ACKed)
+    GET /poll-include.asp HTTP/1.0
+	Response Code:       200 (OK)
+	Request Length:      392
+	Reply Length:        2038
+	Content Length:      1836
+	Content Type  :      text/html
+	Time request sent:   Thu May  1 14:29:46.023979 2003 (1051813786.024)
+	Time reply started:  Thu May  1 14:29:46.300471 2003 (1051813786.300)
+	Time reply ACKed:    Thu May  1 14:29:49.254442 2003 (1051813789.254)
+	Elapsed time:  276 ms (request to first byte sent)
+	Elapsed time:  3230 ms (request to content ACKed)
+    POST /poll-include.asp HTTP/1.0
+	Response Code:       302 (Found)
+	Request Length:      496
+	Reply Length:        376
+	Content Length:      137
+	Content Type  :      text/html
+	Time request sent:   Thu May  1 14:29:48.771677 2003 (1051813788.772)
+	Time reply started:  Thu May  1 14:29:49.160714 2003 (1051813789.161)
+	Time reply ACKed:    Thu May  1 14:29:50.939836 2003 (1051813790.940)
+	Elapsed time:  389 ms (request to first byte sent)
+	Elapsed time:  2168 ms (request to content ACKed)
+    GET /poll-include.asp HTTP/1.0
+        . . .
+    GET /img/color.gif HTTP/1.0
+        . . .
+. . .
+. . .
+</PRE>
+
+<P>
+First, we see the regular output of 
+<A NAME="tex2html93" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+listing the 20 connections
+traced in the dumpfile, which is followed by the <TT>http</TT> module
+output. For the first connection labeled <TT>a2b</TT>, the module lists the
+time the FIN segments were received from the client and server. Since the
+SYN segments opening the connections were not captured in the dumpfile, the
+connection is incomplete, and hence, 
+the module does not report any detailed HTTP information. 
+The connection labeled
+<TT>i2j</TT> was complete however, and we see the times the SYN and FIN
+segments were received from the client and server respectively. This is
+followed by various HTTP requests and responses seen in the connection :
+<TT>GET /main.asp, GET /poll-include.asp, POST /poll-include.asp, ...</TT>
+etc., requesting (GET) or submitting (POST) files 
+<TT>main.asp and poll-include.asp</TT>.
+
+<P>
+Let us see the information reported as part of the <TT>GET /main.asp</TT>
+HTTP request.
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">Response Code</SPAN> field displays the HTTP response code
+indicating the type of HTTP response received from the server.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">Request Length</SPAN> tracks the total length (in bytes) of this
+HTTP request.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">Reply Length</SPAN> tracks the length of the HTTP response received 
+from the server for this HTTP request.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">Content Length</SPAN> field reports the length of the response found
+from the <TT>Content Length</TT> field part of the HTTP response. If the
+<TT>Content Length</TT> field is not found in the response, the
+<SPAN  CLASS="textbf">Content Length</SPAN> is reported as the length of the remaining data
+(after the headers) in the server-to-client data file.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">Content Type</SPAN> reports the content type of the data being sent
+in the response. 
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">Time request sent, Time reply started, Time reply ACKed</SPAN>
+fields, as is obvious from their names, track the time the request was sent,
+the time when the first segment carrying the response was received, and when
+the response was ACKed by the client, respectively. Note that the times are 
+printed in human readable text format along with their absolute values.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">Elapsed time</SPAN> fields indicate the time elapsed between seeing 
+the request and receiving the first byte of the response, and the time 
+elapsed between seeing the request and having the response ACKed.
+
+<P>
+</LI>
+</UL>
+
+<P>
+Besides listing HTTP information for connections as specified above, the 
+module also generates the <TT>http.times</TT> file that lists 
+for all the complete connections found, 
+the time the connection was open, the times when the
+request/responses were received. The <TT>http.times</TT> file looks similar
+to the following :
+
+<P>
+<PRE>
+conn 88.56.8.130:35458 21.28.79.90:80 i2j 2117 5 34953 5
+reqrep 88.56.8.130:35458 21.28.79.90:80 i2j 1051813781.701 1051813785.190 
+  1051813786.395 438 30730 200 GET /main.asp HTTP/1.0 text/html
+reqrep 88.56.8.130:35458 21.28.79.90:80 i2j 1051813786.024 1051813786.300 
+  1051813789.254 392 2038 200 GET /poll-include.asp HTTP/1.0 text/html
+reqrep . . .
+reqrep . . .
+reqrep . . .
+conn 231.65.90.63:63018 151.12.146.176:80 o2p 562 1 8558 1
+</PRE>
+
+<P>
+The first line (beginning with <TT>conn</TT>) denotes the opening of a HTTP 
+connection and lists the client and server endpoints (IP and port # : 
+<TT>88.56.8.130:35458, 21.28.79.90:80</TT>), the connection label
+assigned to the connection (i2j), 
+the total request length in bytes (2117) found as the length of the file
+storing the contents of data from the client to server, the total number of
+requests found (5), the total reply length in bytes
+(34953) found as the length of the file storing the contents of data from
+the server to the client, and the total number of responses found (5).
+The first <TT>reqrep</TT> line shown above denotes the first
+request/response seen as part of the first connection. This line lists first
+the client and server endpoints and the connection label (i2j) assigned. The
+following fields list the timestamps when the request was sent
+(<TT>1051813781.701</TT>), when the first byte of the response is seen
+(<TT>1051813785.190</TT>), and when the response was ACKed (<TT>
+1051813786.395</TT>); the length of the request (<TT>438</TT>) and the response
+(<TT>30730</TT>); the response code (<TT>200</TT>) and the method it stands
+for (<TT>GET</TT>), the content requested (<TT>/main.asp HTTP/1.0</TT>) and
+the content type (<TT>text/html</TT>).
+
+<P>
+The <TT>http</TT> module also generates graphs for every client found in the
+dumpfile, plotting information on every web connection generated by the client.
+
+<P>
+A sample graph generated for all the web connections initiated by client
+<TT>88.56.8.130</TT>, is shown in Figure <A HREF="node33_ct.html#http-1">9.9</A>.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="http-1"></A><A NAME="1748"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9.9:</STRONG>
+HTTP Module Plot #1</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3415" ALIGN="CENTER">
+<IMG
+  WIDTH="721" HEIGHT="446" ALIGN="BOTTOM" BORDER="0"
+ SRC="./http-1.jpg"
+ ALT="Image http-1">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+Each of the long lines in the figure represent a web connection initiated by
+the client and their length represents the lifetime of the connection. 
+The y-axis labeled URL doesn't mean anything specific, and is just an
+offset that begins from 1000 and is incremented by a constant value by the 
+module for every web connection found in the dumpfile. 
+
+<P>
+The ticks drawn below the lines represent the times when non-zero data 
+segments were received from the server.
+
+<P>
+If we zoom into the beginning of the bottom-most connection shown in 
+Figure <A HREF="node33_ct.html#http-1">9.9</A>, we get Figure <A HREF="node33_ct.html#http-2">9.10</A>.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="http-2"></A><A NAME="1755"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9.10:</STRONG>
+HTTP Module Plot #2</CAPTION>
+<TR><TD>
+<DIV CLASS="centerline" ID="par3419" ALIGN="CENTER">
+<IMG
+  WIDTH="705" HEIGHT="434" ALIGN="BOTTOM" BORDER="0"
+ SRC="./http-2.jpg"
+ ALT="Image http-2">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+The <SPAN  CLASS="textbf">Clnt SYN</SPAN> and <SPAN  CLASS="textbf">Serv SYN</SPAN> ticks on the line represent the
+times when the SYN segments were seen from the client and server
+respectively. Similarly <SPAN  CLASS="textbf">Clnt FIN</SPAN> and <SPAN  CLASS="textbf">Serv FIN</SPAN> found
+towards the end of the line represent the times when the FIN segments were
+seen from the client and server respectively.
+
+<P>
+In Figure <A HREF="node33_ct.html#http-3">9.11</A>, we zoom into the information printed on top of
+the connection lines. Each such small line segment
+represents a request-response seen in the connection. We can see in this
+Figure, the requests for <TT>main.asp, poll-include.asp</TT>, etc. The left
+diamond adjacent to the label <TT>/main.asp HTTP/1.0</TT> represents the
+time when the request was seen. 
+The length of the small line segment found towards the right
+represents the time elapsed receiving the response, with the left and right 
+arrows representing the times when the first and last bytes of the
+response were received. The diamond on the right represents the time the
+response was ACKed, with the text field <TT>30447</TT> representing
+the length of the response.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="http-3"></A><A NAME="1768"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 9.11:</STRONG>
+HTTP Module Plot #3</CAPTION>
+<TR><TD><P>
+<DIV CLASS="centerline" ID="par3423" ALIGN="CENTER">
+<IMG
+  WIDTH="721" HEIGHT="446" ALIGN="BOTTOM" BORDER="0"
+ SRC="./http-3.jpg"
+ ALT="Image http-3">
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

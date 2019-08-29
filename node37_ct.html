@@ -1,0 +1,264 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Writing Modules </TITLE>
+<META NAME="description" CONTENT="Contents of Writing Modules ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="previous" HREF="node36_mn.html">
+<LINK REL="up" HREF="node31_mn.html">
+<LINK REL="next" HREF="node38_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION001060000000000000000"></A><A NAME="sec:_Writing_Modules"></A>
+<BR>
+Writing Modules 
+</H1>
+This section describes how to write your own plug-in modules for 
+<A NAME="tex2html97" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+. 
+The structure definition of a module (found in <TT>modules.h</TT>)
+is shown below.
+
+<P>
+<PRE>
+struct module {
+    Bool	module_inuse;
+    char	*module_name;
+    char	*module_descr;
+
+    int (*module_init) (int argc, char *argv[]);
+
+    void (*module_read) (
+	struct ip *pip,		/* the packet */
+	tcp_pair *ptp,		/* info I have about this connection */
+	void *plast,		/* pointer to last byte */
+	void *pmodstruct);	/* module-specific structure */
+
+    void (*module_done) (void);
+
+    void (*module_usage)(void);
+
+    void (*module_newfile)(
+	char *filename,		/* the name of the current file */
+	u_long filesize,	/* number of bytes in file (might be compressed) */
+	Bool fcompressed);	/* is the file compressed? */
+
+    void *(*module_newconn)(
+	tcp_pair *ptp);		/* info I have about this connection */
+
+    void (*module_udp_read) (
+	struct ip *pip,		/* the packet */
+	udp_pair *pup,		/* info I have about this connection */
+	void *plast,		/* pointer to last byte */
+	void *pmodstruct);	/* module-specific structure */
+
+    void *(*module_udp_newconn)(
+	udp_pair *ptp);		/* info I have about this connection */
+
+    void (*module_nontcpudp_read) (
+	struct ip *pip,		/* the packet */
+	void *plast);		/* pointer to last byte */
+
+    void (*module_deleteconn) (
+	 tcp_pair *ptp,		/* info I have about this connection */
+	 void *pmodstruct);	/* module-specific structure */
+};
+</PRE>
+
+<P>
+As shown above, each module definition consists of fields that store a
+basic description of the module followed by a list of function pointers that 
+need to be filled with functions specific to the module. The
+<TT>module_inuse</TT> variable is used by 
+<A NAME="tex2html98" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+to see if the module has
+been selected and is active.
+The <TT>module_name, and module_descr</TT> fields
+store the name and a short description of the module and are useful for
+debugging purposes. The list of function pointers that follow need to be set 
+to appropriate module specific functions.
+
+<P>
+The function pointers and their assignments for the Real-Time module (from
+the <TT>modules.h</TT> file) are shown below. These functions are defined in
+the <TT>mod_realtime.c</TT> file.
+
+<P>
+<PRE>
+    {TRUE,		         /* make FALSE if you don't want to call it at all */
+     "realtime",                 /* name of the module */
+     "example real-time package",/* description of the module */
+     realtime_init,		 /* routine to call to init the module */
+     realtime_read,		 /* routine to pass each TCP segment */
+     realtime_done,		 /* routine to call at program end */
+     realtime_usage,		 /* routine to call to print module usage */
+     NULL,			 /* routine to call on each new file */
+     realtime_newconn,		 /* routine to call on each new connection */
+     realtime_udp_read,          /* routine to pass each UDP segment */
+     NULL,              	 /* routine to call on each new UDP conn */
+     realtime_nontcpudp_read, 	 /* routine to pass each non-tcp and non-udp 
+				    packets*/
+     realtime_deleteconn}
+</PRE>
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">*module_init</SPAN> This is the module initialization function.
+
+<A NAME="tex2html99" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+passes the received command-line arguments (<TT>int argc, char
+*argv[]</TT>) to all of the registered modules and the modules are expected to
+note the arguments that concern them and delete them by
+making the corresponding argv[] pointer point to NULL. If this function
+returns 1, 
+<A NAME="tex2html100" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+will treat the module as active by turning on the
+<TT>module_inuse</TT> flag for the module. 
+On the other hand, if 0 is returned, the module is treated as inactive.
+
+<P>
+For example, the <TT>realtime_init</TT> function assigned by the Real-Time
+module looks for the command-line argument <TT>-xrealtime</TT> to decide if
+the module is being invoked or not and returns 1 if found, and 0
+otherwise. If you want your module <TT>mymod</TT> to be able to handle module 
+specific arguments as in <TT>-xmymod''ARGS''</TT>, look into the
+<TT>traffic</TT> module code in <TT>mod_traffic.c</TT> for example.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">*module_read</SPAN> This function is called for every TCP packet
+being processed. 
+<A NAME="tex2html101" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+supplies the IP packet itself in host byte
+order (<TT>pip</TT>), the information it has about the TCP connection
+(<TT>ptp</TT>), 
+a void pointer pointing to the memory location of the last byte of the
+packet (<TT>plast</TT>), 
+and a pointer to the module specific structure previously associated with this
+connection (<TT>pmodstruct</TT>) 
+in the call to <TT>*module_newconn</TT> function
+(called when the connection was opened).
+This module specific structure is useful when the module needs to store any
+module-specific information that needs to be associated with the connection. 
+A module-specific structure can be initialized and given to 
+<A NAME="tex2html102" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+in the
+<TT>*module_newconn</TT> function and gets returned to the module 
+in subsequent calls to the <TT>*module_read</TT> function.
+
+<P>
+With the <TT>Real-Time</TT> module for example, 
+
+<A NAME="tex2html103" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+returns the <TT>rtconn</TT> structure associated with the connection
+by the <TT>realtime_newconn</TT> function when the connection was opened
+as the fourth argument in the <TT>realtime_read</TT> function (called for
+every TCP packet of the connection).
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">*module_done</SPAN> This function is called at the end when
+
+<A NAME="tex2html104" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+is done processing the dumpfile(s). You might print the end
+results/statistics accumulated by your module in this function.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">*module_usage</SPAN> The function to be called to print module
+specific usage message. Please make sure what command line arguments your
+module understands and what they mean, are printed out briefly in this 
+function.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">*module_newfile</SPAN> This function is called everytime 
+<A NAME="tex2html105" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+begins processing a new dumpfile. The arguments to the function include the
+filename, the file size, and a boolean variable indicating if the file were 
+compressed. A file size value of 1 is returned if reading from stdin.
+
+<P>
+Note that the <TT>Real-Time</TT> module sets the function pointer
+corresponding to this function to NULL meaning that the module does not want
+to be notified of the event.
+Similarly, you may set any of the function pointers you are not interested in
+to NULL if you do not want to be notified of the corresponding event by 
+
+<A NAME="tex2html106" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">*module_newconn</SPAN> This function is called every time a new TCP
+connection is seen opening (upon seeing the first packet of a new
+connection). You may initialize any module specific structure for this new
+connection and return its address as a void pointer. Note that the function
+<TT>*module_newconn</TT> is called before the <TT>*module_read</TT>
+function so that the latter function is called on the first packet of the
+connection too.
+
+<P>
+See the <TT>realtime_newconn</TT> for an example of how a module specific
+connection structure is initialized and returned.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">*module_udp_read</SPAN> This function is called for every UDP
+packet seen. The arguments and their semantics are similar to the
+<TT>*module_read</TT> call. The arguments include the IP packet itself that
+was captured, the information 
+<A NAME="tex2html107" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+keeps
+for this connection, a pointer to the memory location storing the last byte
+of the packet, and any module specific structure returned in the previous
+call to the <TT>*module_udp_newconn</TT> function.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">*module_udp_newconn</SPAN> Similar to the
+<TT>*module_newconn</TT> function, this function is called whenever a new
+UDP connection is opened (upon seeing the first packet of the connection).
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">*module_nontcpudp_read</SPAN> This function is called for every
+non TCP/UDP packet seen. The arguments passed are the IP packet in itself
+and a pointer to the last byte of the packet.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">*module_deleteconn</SPAN> This function is called whenever 
+<A NAME="tex2html108" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+deletes a connection from its list of active connections in Real-Time mode
+as explained in Section <A HREF="node28_ct.html#sec:_Real-Time_Analysis">8.2</A>.
+</LI>
+</UL>
+
+<P>
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

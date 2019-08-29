@@ -1,0 +1,141 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Packet Details </TITLE>
+<META NAME="description" CONTENT="Contents of Packet Details ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node30_mn.html">
+<LINK REL="previous" HREF="node28_mn.html">
+<LINK REL="up" HREF="node26_mn.html">
+<LINK REL="next" HREF="node30_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00930000000000000000"></A><A NAME="sec:_Packet_Details"></A>
+<BR>
+Packet Details 
+</H1>
+
+<P>
+<SPAN  CLASS="textbf">Printing</SPAN>
+<BR>
+The <SPAN  CLASS="textbf">-p</SPAN> option prints information from the Ethernet, IP, and TCP/UDP
+headers <A HREF="node40_ct.html#ch:_protocolQR">C</A> for all the packets found in the dumpfile. 
+For example, 
+<PRE>
+Beluga:/Users/mani&gt; tcptrace -p malus.dmp.gz
+</PRE>
+produces output as shown below for all the packets found in the file
+<TT>malus.dmp.gz</TT>.
+
+<P>
+<PRE>
+. . .
+Packet 2
+	Packet Length: 74
+	Collected: Thu Jul 10 19:12:54.987110 2003
+	ETH Srce: 00:00:00:00:00:00
+	ETH Dest: 00:00:00:00:00:00
+	    Type: 0x800 (IP)
+	IP  VERS: 4
+	IP  Srce: 17.112.152.32 (a17-112-152-32.apple.com)
+	IP  Dest: 132.235.3.153 (elephus.cs.ohiou.edu)
+	    Type: 0x6 (TCP)
+	    HLEN: 20
+	     TTL: 50
+	     LEN: 60
+	      ID: 32113
+	   CKSUM: 0x9936
+	  OFFSET: 0x4000  Don't Fragment
+
+	TCP SPRT: 80 (http)
+	    DPRT: 59518 
+	     FLG:   -A--S- (0x12)
+	     SEQ: 0x1fbdbe84
+	     ACK: 0x0f455ca5
+	     WIN: 33304
+	    HLEN: 40
+	   CKSUM: 0xfa0f
+	    DLEN: 0
+	    OPTS: 20 bytes	 MSS(1460) WS(0) TS(-202350942,1957864058)
+Packet 3
+. . .
+</PRE>
+
+<P>
+As illustrated above, detailed information from the protocol headers of
+is printed for every packet. 
+The <TT>-X</TT> option which is set by default causes
+fields like <TT>SEQ, ACK</TT> to be printed in hexadecimal. You may use the
+<TT>-D</TT> option to print them in decimal.
+Note that since this option prints loads of 
+output for every packet, you probably want to use the <SPAN  CLASS="textbf">-B</SPAN> and/or 
+<SPAN  CLASS="textbf">-E</SPAN> options <A HREF="node20_ct.html#sec:_Basic_Filtering">6.1</A> to selectively print 
+information on the packets of interest. 
+
+<P>
+On the other hand, if you are using the <SPAN  CLASS="textbf">-o</SPAN>/<SPAN  CLASS="textbf">-i</SPAN> options 
+<A HREF="node20_ct.html#sec:_Basic_Filtering">6.1</A> or the <SPAN  CLASS="textbf">--oUDP</SPAN>/<SPAN  CLASS="textbf">--iUDP</SPAN> 
+<A HREF="node27_ct.html#sec:_UDP_Analysis">8.1</A> to selectively process TCP or UDP connections 
+respectively, you need to use the <SPAN  CLASS="textbf">-P</SPAN> option (instead of the
+<SPAN  CLASS="textbf">-p</SPAN> option) to print packet information on the selected connections
+alone. For example, 
+
+<P>
+<PRE>
+tcptrace -n -o1,3 -P sirius.dmp
+</PRE>
+
+<P>
+prints packet header information only from the packets part of TCP
+connections 1 and 3, found in the dumpfile <TT>sirius.dmp</TT>.
+
+<P>
+<SPAN  CLASS="textbf">Extracting</SPAN>
+<BR>
+The <SPAN  CLASS="textbf">-e</SPAN> option can be used to extract the contents (TCP data payload)
+of each connection into a separate data file.
+
+<P>
+For example,
+
+<P>
+<PRE>
+Beluga:/Users/mani&gt; tcptrace -e albus.dmp
+</PRE>
+
+<P>
+generates files a2b_contents.dat, b2a_contents.dat; c2d_contents.dat,
+d2c_contents.dat if the file <TT>albus.dmp</TT> had 2 traced TCP connections.
+
+<A NAME="tex2html76" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+is pretty smart in generating these contents files. It does not
+commit trivial mistakes like saving retransmissions multiple times in the file
+for example, and is aware of sequence space wrap-arounds.
+However, if you want the entire contents of the traffic, please make
+sure that packets are captured in their entirety (give suitable snaplen value 
+with <TT>tcpdump</TT> for example).
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

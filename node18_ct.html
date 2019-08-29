@@ -1,0 +1,112 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Miscellany </TITLE>
+<META NAME="description" CONTENT="Contents of Miscellany ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="previous" HREF="node17_mn.html">
+<LINK REL="up" HREF="node11_mn.html">
+<LINK REL="next" HREF="node19_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00670000000000000000"></A><A NAME="sec:_Graphing_Miscellany"></A>
+<BR>
+Miscellany 
+</H1> 
+If you want to generate all the graphs, use the <TT>-G</TT> option.
+If you want monochrome plots, use the <TT>-M</TT> option. For the sake of
+completeness, the <TT>-C</TT> option produces color plots (which of course is 
+the default behavior).
+
+<P>
+In all the above graphs, the X-axis represents the actual time of the
+connection. If you want relative time with time beginning at 0, use the
+<TT>-zx</TT> option while generating the graphs. The Y-axis can also be made
+to begin from 0 with the <TT>-zy</TT> option. This is generally useful in
+Time Sequence graphs, where the sequence offset rather than the actual
+sequence number values may be desired. Figure <A HREF="node12_ct.html#tsg4">5.4</A> shows a section of a 
+Time Sequence graph generated with <TT>-zxy</TT> option, causing both the axes 
+to begin from 0.
+
+<P>
+If you would rather have the graphs generated be placed in a separate
+directory, and not clutter your working directory, use the
+<TT>-output_dir</TT> option. For example, 
+
+<P>
+<PRE>
+tcptrace -G --output_dir=graphs indica.dmp
+</PRE>
+
+<P>
+would leave all the graphs in the <TT>graphs</TT> directory. 
+
+<P>
+Now, if you are using the same <TT>graphs</TT> directory to store the graphs 
+generated from another file <TT>mangifera.dmp</TT>, the old *.xpl files from 
+<TT>indica.dmp</TT> may get over-written by the new *.xpl files. You may
+wish to use the <TT>-output_prefix</TT> option to fix this. For example,
+
+<P>
+<PRE>
+tcptrace -G --output_dir=graphs --output_prefix=mangifera_ mangifera.dmp
+</PRE>
+
+<P>
+would generate files of the form <TT>mangifera_a2b_tsg.xpl</TT> in the
+<TT>graphs</TT> directory.
+
+<P>
+
+<A NAME="tex2html58" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+can also call xplot internally to pop-up the graphs generated at
+the end of processing the dumpfile(s) with the
+<TT>-xplot_all_files</TT> option. For example,
+
+<P>
+<PRE>
+tcptrace -S --xplot_all_files elephus.dmp
+</PRE>
+This would pop-up all the Time Sequence graphs generated for the dumpfile 
+<TT>elephus.dmp</TT>, which could be a lot depending on the number of
+connections found. This option is meant for use when there are a few
+connections in the dumpfile, unless you want your screen to be filled with
+xplot graphs. While using this option, any options that need to be given to
+xplot for drawing the graphs can also be specified with the
+<TT>``-xplot_args=. . .'' </TT> option, where the <TT>``. . .''</TT> is the
+place-holder for any xplot options to be set, while calling xplot internally
+from 
+<A NAME="tex2html59" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+. 
+If multiple options are being passed to xplot, it is recommended
+that the entire option be enclosed in double quotes as shown above,
+to protect it from being interpreted as multiple command-line arguments by 
+your Shell.
+
+<P>
+A user-defined prefix may be added to the title of the xplot graphs if
+necessary, by passing the prefix in the 
+<TT>-xplot_title_prefix=''...''</TT> option.
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,117 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of CWND Stats </TITLE>
+<META NAME="description" CONTENT="Contents of CWND Stats ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="previous" HREF="node9_mn.html">
+<LINK REL="up" HREF="node7_mn.html">
+<LINK REL="next" HREF="node11_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00530000000000000000"></A><A NAME="sec:_owin_stat"></A>
+<BR>
+CWND Stats 
+</H1>
+
+<A NAME="tex2html37" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+reports statistics on the estimated congestion window with the
+<TT>-W</TT> option when used in conjunction with the <TT>-l</TT> option.
+Since there is no direct way to determine the congestion window at the TCP
+sender, the outstanding unacknowledged data is used to estimate the congestion
+window. The 4 new statistics produced by the <TT>-W</TT> option in addition to
+the detailed statistics reported due to the <TT>-l</TT> option, are 
+explained below.
+
+<P>
+<PRE>
+surya:/home/mani/tcptrace-manual&gt; tcptrace -lW malus.dmp.gz
+
+1 arg remaining, starting with 'malus.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+32 packets seen, 32 TCP packets traced
+elapsed wallclock time: 0:00:00.026658, 1200 pkts/sec analyzed
+trace file elapsed time: 0:00:00.404427
+TCP connection info:
+1 TCP connection traced:
+TCP connection 1:
+	host a:        elephus.cs.ohiou.edu:59518
+	host b:        A17-112-152-32.apple.com:80
+	complete conn: yes
+	first packet:  Thu Jul 10 19:12:54.914101 2003
+	last packet:   Thu Jul 10 19:12:55.318528 2003
+	elapsed time:  0:00:00.404427
+	total packets: 32
+	filename:      malus.dmp.gz
+   a-&gt;b:			      b-&gt;a:
+     total packets:            16           total packets:            16
+           . . .                                  . . .
+           . . .                                  . . .
+     avg win adv:           22091 bytes     avg win adv:           33304 bytes
+     
+     max owin:                451 bytes     max owin:               1449 bytes
+     min non-zero owin:         1 bytes     min non-zero owin:         1 bytes
+     avg owin:                 31 bytes     avg owin:               1213 bytes
+     wavg owin:               113 bytes     wavg owin:               682 bytes
+     
+     initial window:          450 bytes     initial window:         1448 bytes
+           . . .                                  . . .
+           . . .                                  . . .          
+     throughput:             1113 Bps       throughput:            44957 Bps
+</PRE>
+
+<P>
+
+<UL>
+<LI><TT>max owin</TT> The maximum outstanding unacknowledged data (in
+bytes) seen at any point in time in the lifetime of the connection.
+
+<P>
+</LI>
+<LI><TT>min non-zero owin</TT> The minimum (non-zero) outstanding
+unacknowledged data (in bytes) seen.
+
+<P>
+</LI>
+<LI><TT>avg owin</TT> The average outstanding unacknowledged data (in
+bytes), calculated from the sum of all the outstanding data byte samples (in
+bytes) divided by the total number of samples.
+
+<P>
+</LI>
+<LI><TT>wavg owin</TT> The weighted average outstanding unacknowledged
+data seen. For example, if the outstanding data (odata) was 500 bytes for
+the first 0.1 seconds, 1000 bytes for the next 1 second, and 2000 bytes for
+the last 0.1 seconds of a connection that lasted 1.2 seconds, <TT>wavg
+owin</TT>= ((500 x 0.1) + (1000 x 1) + (2000 x 0.1)) / 1.2 = 1041.67 bytes an
+estimate closer to 1000 bytes which was the outstanding data 
+for the most of the lifetime of the connection. Note that the
+straight-forward average reported in <TT>avg owin</TT> would have been
+(500+1000+2000)/1.2 = 2916.67 bytes, a value less indicative of the
+outstanding data observed during most of the connection's lifetime.
+</LI>
+</UL>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

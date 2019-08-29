@@ -1,0 +1,77 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of Using tcptrace
+</TITLE>
+<META NAME="description" CONTENT="Contents of Using tcptrace
+">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="previous" HREF="node4_mn.html">
+<LINK REL="up" HREF="node3_mn.html">
+<LINK REL="next" HREF="node6_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION00320000000000000000">
+Using 
+</A><A NAME="tex2html18" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+
+</H1>
+
+<P>
+
+<A NAME="tex2html19" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+can be run on a network dumpfile trivially as in 
+<PRE>
+tcptrace dumpfile
+</PRE>
+where <TT>dumpfile</TT> is a file containing traffic captured from the network.
+
+<A NAME="tex2html20" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+understands various network dumpfile formats like
+tcpdump, snoop, etherpeek, netm, ns, nlanr, netscout. Dumpfiles in these
+formats can also be compressed in GnuZIP (gz), BZIP2 (bz2), or 
+UNIX compress (Z) formats, as 
+<A NAME="tex2html21" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+can uncompress them on the fly.
+
+<P>
+
+<A NAME="tex2html22" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+can be passed multiple command-line options to perform various tasks
+as explained in subsequent chapters. If you want 
+<A NAME="tex2html23" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+to always start
+processing with certain command-line options, you may store them in
+<TT>.tcptracerc</TT> file in your home directory, or set the 
+<TT>TCPTRACEOPTS</TT> environment variable with the options. 
+
+<A NAME="tex2html24" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+reads the  <TT>.tcptracerc</TT> file and the <TT>TCPTRACEOPTS</TT> 
+environment variable before processing options given in command-line.
+
+<P>
+You may also use <TT>tcptrace -h</TT> to get brief descriptions of various 
+command-line options.
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

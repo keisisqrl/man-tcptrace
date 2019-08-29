@@ -1,0 +1,102 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of SLICE Module </TITLE>
+<META NAME="description" CONTENT="Contents of SLICE Module ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node35_mn.html">
+<LINK REL="previous" HREF="node33_mn.html">
+<LINK REL="up" HREF="node31_mn.html">
+<LINK REL="next" HREF="node35_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION001030000000000000000"></A><A NAME="sec:_SLICE_Module"></A>
+<BR>
+SLICE Module 
+</H1>
+The <TT>SLICE</TT> module prints basic traffic statistics observed every
+timeslice. When the <TT>SLICE</TT> module is invoked as in :
+
+<P>
+<PRE>
+surya:/home/mani&gt; tcptrace -xslice rexmit.dmp.gz
+</PRE>
+
+<P>
+it leaves a data file by name <TT>slice.dat</TT> in the working directory
+that looks like :
+
+<P>
+<PRE>
+date                segs    bytes  rexsegs rexbytes      new   active
+--------------- -------- -------- -------- -------- -------- --------
+03:00:23.813146       40    33976        3     3060        1        1
+03:00:38.813146       54    50592        7    10500        0        1
+03:00:53.813146       77    70612        6     9000        0        1
+03:01:08.813146       29    29020        5     7500        0        1
+. . .
+. . .
+</PRE>
+
+<P>
+As shown above the date field indicates the time at the end of the time
+slice (15 seconds by default). The subsequent fields indicate the segments
+seen (<TT>segs</TT>), the total bytes of data seen (<TT>bytes</TT>), the
+total number of retransmitted segments (<TT>rexsegs</TT>) and retransmitted
+bytes (<TT>rexbytes</TT>), the total number of new connections opened in the
+past time-slice (<TT>new</TT>) and the total number of connections active in
+the past time-slice (<TT>active</TT>). The <TT>slice.dat</TT> file can be
+used as a data file to plot a graph with the <TT>gnuplot</TT> program for
+example, to see how the reported characteristics varied over time in the
+period of data capture of the dumpfile.
+
+<P>
+The module also allows the following options that can be passed as ARGS in 
+<TT>-xslice''[ARGS]''</TT> and given in the command line.
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">-iS</SPAN> if you want to change the default slice interval of 15
+seconds to S seconds. Note that S can be a floating point value if you want.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-t[b|l|u|U]</SPAN> The <SPAN  CLASS="textbf">-tb</SPAN> specifies the date field in brief
+and is the default (as shown in the above example); <SPAN  CLASS="textbf">-tl</SPAN> specifies
+the date in the long text format as in <TT>Fri Apr 28 03:00:23.813146
+2000</TT>; <SPAN  CLASS="textbf">-tu</SPAN> prints the date as Unix timestamps as in
+<TT>956905223</TT>; <SPAN  CLASS="textbf">-tU</SPAN> prints the date as Unix timestamps too, but
+also includes the micro-second part of the timestamp as in
+<TT>956905223.813146</TT>.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-d</SPAN> turns on local debugging of this module.
+</LI>
+</UL>
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

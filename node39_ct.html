@@ -1,0 +1,110 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of XPLOT QR</TITLE>
+<META NAME="description" CONTENT="Contents of XPLOT QR">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node40_mn.html">
+<LINK REL="previous" HREF="node38_mn.html">
+<LINK REL="up" HREF="manual_mn.html">
+<LINK REL="next" HREF="node40_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION001200000000000000000"></A><A NAME="ch:_xplotQR"></A>
+<BR>
+XPLOT QR
+</H1>
+This chapter briefly explains the usage of the xplot program.
+
+<P>
+There seems to be a few other programs floating around the net by the
+same name.  This one was written by Tim Shepard while doing his S.M.
+thesis "TCP Packet Trace Analysis" for David Clark at the MIT
+Laboratory for Computer Science.  The thesis can be ordered from
+MIT/LCS Publications.  Ordering information can be obtained from
++1 617 253 5851 or send mail to publications@lcs.mit.edu.  Ask for
+MIT/LCS/TR-494.  Or you can get it on the net free of charge from
+&lt;ftp://ftp.lcs.mit.edu/pub/lcs-pubs/tr.outbox/MIT-LCS-TR-494.ps.gz&gt;.
+
+<P>
+You may also look at the program's web-site
+<A NAME="tex2html112" HREF="http://www.xplot.org" TARGET="_top">xplot</A>
+for the latest version of the program.
+
+<P>
+<SPAN  CLASS="textbf">Basic Usage</SPAN> 
+<BR>
+<P>
+Viewing xplot graph(s) (commonly named as files with the .xpl suffix) is as
+simple as saying :
+
+<P>
+<PRE>
+xplot file1.xpl [file2.xpl {. . .} ]
+</PRE>
+
+<P>
+You may use the Left-Mouse button to drag and select a specific area in the 
+graph to zoom on it. 
+You may keep repeating this procedure to zoom in more and more
+to see any specific area of the graph in more and more detail. The zoom views
+are stored in a stack internally, and clicking the Left-Mouse button on the
+graph lets you zoom-out level by level popping out the stack. The
+Middle-Mouse button (clicking and dragging) lets you scroll the graph. The
+Right-Mouse button closes the graph being viewed.
+
+<P>
+The <TT>-x</TT> option can be useful if you are viewing related graphs (the
+forward and reverse directions of a connection, for example) to line-up the
+x-axes of both the graphs.
+
+<P>
+Using :
+<PRE>
+xplot -x a2b_tsg.xpl b2a_tsg.xpl
+</PRE>
+for example, sets their x-axes in sync so that, zooming in on one of the
+graphs, also zooms the other graph, so that you see the same time-scales on
+both the graphs all the time. Similar semantics are also supported for the
+y-axis with the <TT>-y</TT> option.
+
+<P>
+<SPAN  CLASS="textbf">Generating Postscript</SPAN> 
+<BR>
+<P>
+Clicking the Left-Mouse Button with the <TT>SHIFT</TT> key pressed, drops a
+postscript version of the graph being viewed in the working directory. 
+The postscript files are named 
+<TT>Title.PS.#</TT> where <TT>Title</TT> is the title of the graph and #
+is a serial number that gets from 0, 1, ... used so that files do not
+overwritten accidentally in the working directory. 
+
+<P>
+Clicking the Middle-Mouse Button with the <TT>SHIFT</TT> key pressed drops
+a postscript file of smaller size that is good for including in a paper,
+for example. Clicking the Right-Mouse Button with the
+<TT>SHIFT</TT> key pressed also drops a smaller size postscript file, but
+the graph is made smaller vertically.
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,132 @@
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Contents of COLLIE Module </TITLE>
+<META NAME="description" CONTENT="Contents of COLLIE Module ">
+<META NAME="keywords" CONTENT="manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="manual.css">
+
+<LINK REL="next" HREF="node36_mn.html">
+<LINK REL="previous" HREF="node34_mn.html">
+<LINK REL="up" HREF="node31_mn.html">
+<LINK REL="next" HREF="node36_mn.html">
+</HEAD>
+ 
+<BODY bgcolor="#ffffff" text="#000000" link="#9944EE" vlink="#0000ff" alink="#00ff00">
+
+<H1><A NAME="SECTION001040000000000000000"></A><A NAME="sec:_COLLIE_Module"></A>
+<BR>
+COLLIE Module 
+</H1>
+
+<P>
+The <TT>COLLIE</TT> module is a simple module that can display basic
+information on the connections (TCP and UDP) found in the dumpfile. A sample
+output is shown below.
+
+<P>
+<PRE>
+Beluga:/Users/mani&gt; tcptrace -xcollie alastor.dmp.gz
+1 arg remaining, starting with 'alastor.dmp.gz'
+Ostermann's tcptrace -- version 6.4.6 -- Tue Jul 1, 2003
+
+86 packets seen, 83 TCP packets traced, 2 UDP packets traced
+elapsed wallclock time: 0:00:00.052520, 1637 pkts/sec analyzed
+trace file elapsed time: 0:00:11.623647
+
+Source file: alastor.dmp.gz
+File modification timestamp: Wed Aug  6 18:27:22 2003
+First packet: Tue Aug  5 15:34:30.680899 2003
+Last packet: Tue Aug  5 15:34:42.304547 2003
+
+TCP Connections
+
+Session Start: Tue Aug  5 15:34:40.318839 2003 
+Session End: Tue Aug  5 15:34:40.373548 2003
+Source IP address: 132.235.3.140
+Source Port: 51214
+Source Fully Qualified domain name: pride.cs.ohiou.edu
+Destination IP address: 132.235.3.154
+Destination Port: 80
+Destination Fully Qualified domain name: masaka.cs.ohiou.edu
+Bytes Transferred Source to Destination: 1796
+Bytes Transferred Destination to Source: 17895
+Packets Transferred Source to Destination: 8
+Packets Transferred Destination to Source: 17
+
+Session Start: Tue Aug  5 15:34:30.680899 2003 
+. . .
+. . .
+
+UDP Connections
+
+Session Start: Tue Aug  5 15:34:40.313479 2003 
+Session End: Tue Aug  5 15:34:40.317724 2003
+Source IP address: 132.235.3.140
+Source Port: 49572
+Source Fully Qualified domain name: pride.cs.ohiou.edu
+Destination IP address: 132.235.64.1
+Destination Port: 53
+Destination Fully Qualified domain name: watson.cns.ohiou.edu
+Bytes Transferred Source to Destination: 42
+Bytes Transferred Destination to Source: 143
+Packets Transferred Source to Destination: 1
+Packets Transferred Destination to Source: 1
+</PRE>
+
+<P>
+The <TT>collie</TT> module has the side effect of turning on UDP processing
+(the <SPAN  CLASS="textbf">-u</SPAN>) option. As shown above, the module prints details on the
+source file (<TT>alastor.dmp.gz</TT>), when it was last modified, and the
+times of the first and last packets found in the file. Subsequent lines
+print basic information on the TCP and UDP connections traced. The
+information includes the times when the first and last packet of the
+connection were found (<TT>Session Start, Session Start</TT> respectively);
+the source and destination endpoints, the total number of bytes and packets 
+transferred in the either direction of the connection. Note that the
+<TT>collie</TT> module prints the connection information in reverse
+chronological order, i.e., the most recently opened connection's information
+gets printed before a connection opened earlier.
+
+<P>
+The following options are supported by the <TT>collie</TT> module and are to
+be supplied as ARGS in <TT>-xcollie''ARGS''</TT> to 
+<A NAME="tex2html94" HREF="http://www.tcptrace.org" TARGET="_top"><SPAN  CLASS="textit">tcptrace</SPAN></A>
+in command
+line.
+
+<P>
+
+<UL>
+<LI><SPAN  CLASS="textbf">-n|-l</SPAN> The <SPAN  CLASS="textbf">-n</SPAN> option 
+turns off printing of the labels printed at the
+beginning of each line (<TT>Session Start, Session End, Source IP
+address</TT> etc.), while the <SPAN  CLASS="textbf">-l</SPAN> option turns on printing of the
+labels, which is the default behavior.
+
+<P>
+</LI>
+<LI><SPAN  CLASS="textbf">-d</SPAN> option turns on local debugging in the module.
+</LI>
+</UL>
+
+<P>
+
+<HR>
+<ADDRESS>
+Super-User
+2003-08-29
+</ADDRESS>
+</BODY>
+</HTML>
